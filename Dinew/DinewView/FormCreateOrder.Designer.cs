@@ -97,7 +97,7 @@
             this.textBoxCount.Name = "textBoxCount";
             this.textBoxCount.Size = new System.Drawing.Size(241, 20);
             this.textBoxCount.TabIndex = 9;
-            this.textBoxCount.Click += new System.EventHandler(this.TextBoxCount_TextChanged);
+            this.textBoxCount.TextChanged += new System.EventHandler(this.TextBoxCount_TextChanged);
             // 
             // textBoxSum
             // 
