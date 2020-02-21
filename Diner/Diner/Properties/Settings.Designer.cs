@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DinewView.Properties
+namespace Diner.Properties
 {
 
 

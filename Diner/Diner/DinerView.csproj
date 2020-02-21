@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E34FB286-33F5-4553-8380-E99A6EC3E46E}</ProjectGuid>
+    <ProjectGuid>{71F0ED81-78D0-482C-83DC-4FCAF7B39592}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DinewView</RootNamespace>
-    <AssemblyName>DinewView</AssemblyName>
+    <RootNamespace>Diner</RootNamespace>
+    <AssemblyName>Diner</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -55,6 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCreateOrder.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,11 +151,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DinerBusinessLogic\DinerBusinessLogic.csproj">
-      <Project>{ad4397f5-7f65-4852-9361-e1830d8b8318}</Project>
+      <Project>{0f6768b4-eca3-4b3a-9b0f-88070f7f3107}</Project>
       <Name>DinerBusinessLogic</Name>
     </ProjectReference>
     <ProjectReference Include="DinerListImplement\DinerListImplement.csproj">
-      <Project>{b267945b-57d6-468d-aec7-75d0b8257578}</Project>
+      <Project>{6df8e494-637a-44fb-b205-ab1aada54332}</Project>
       <Name>DinerListImplement</Name>
     </ProjectReference>
   </ItemGroup>
