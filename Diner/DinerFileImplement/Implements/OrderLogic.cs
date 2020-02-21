@@ -18,48 +18,86 @@ namespace DinerFileImplement.Implements
         }
         public void CreateOrUpdate(OrderBindingModel model)
         {
-            Order element = source.Orders.FirstOrDefault(rec => rec.Id != model.Id);
-            if (element != null)
+            Order tempOrder = model.Id.HasValue ? null : new Order { Id = 1 };
+            if (!model.Id.HasValue)
             {
-                throw new Exception("Уже есть продукт с таким названием");
-            }
-            if (model.Id.HasValue)
-                element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
-            {
-                {
-                    throw new Exception("Элемент не найден");
-                }
+                tempOrder.Id = source.Orders.FirstOrDefault(rec => rec.Id >= tempOrder.Id).Id + 1;
             }
             else
             {
-                int maxId = source.Foods.Count > 0 ? source.Foods.Max(rec =>
-               rec.Id) : 0;
-                element = new Order { Id = maxId + 1 };
-                source.Orders.Add(element);
+                tempOrder = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+            }
+            if (model.Id.HasValue)
+            {
+                if (tempOrder == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                CreateModel(model, tempOrder);
+            }
+            else
+            {
+                source.Orders.Add(CreateModel(model, tempOrder));
             }
         }
         public void Delete(OrderBindingModel model)
         {
-            Food element = source.Foods.FirstOrDefault(rec => rec.Id ==
-           model.Id);
+            Order element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id.Value);
             if (element != null)
             {
-                source.Foods.Remove(element);
+                source.Orders.Remove(element);
             }
             else
-            { }
-        }
+            {
+                throw new Exception("Элемент не найден");
+            }
+        } 
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
-            return source.
-            .Where(rec => model == null || rec.Id == model.Id)
-            .Select(rec => new FoodViewModel
+            List<OrderViewModel> result = new List<OrderViewModel>();
+            if (model != null)
             {
-                Id = rec.Id,
-                FoodName = rec.FoodName
-            })
-            .ToList();
+                result.Add(CreateViewModel(source.Orders.FirstOrDefault(rec => rec.Id == model.Id)));
+            }
+            else
+            {
+                result.AddRange(source.Orders.Select(rec => CreateViewModel(rec)));
+            }
+            return result;
+        }
+        private Order CreateModel(OrderBindingModel model, Order order)
+        {
+            Snack Snack = source.Snacks.Where(rec => rec.Id == model.SnackId).FirstOrDefault();
+            if (Snack == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            order.SnackId = model.SnackId;
+            order.Count = model.Count;
+            order.Sum = model.Count * Snack.Price;
+            order.Status = model.Status;
+            order.DateCreate = model.DateCreate;
+            order.DateImplement = model.DateImplement;
+            return order;
+        }
+        private OrderViewModel CreateViewModel(Order order)
+        {
+            Snack Snack = source.Snacks.Where(rec => rec.Id == order.SnackId).FirstOrDefault();
+            if (Snack == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            return new OrderViewModel
+            {
+                Id = order.Id,
+                SnackId = order.SnackId,
+                SnackName = Snack.SnackName,
+                Count = order.Count,
+                Sum = order.Sum,
+                Status = order.Status,
+                DateCreate = order.DateCreate,
+                DateImplement = order.DateImplement
+            };
         }
     }
 }
