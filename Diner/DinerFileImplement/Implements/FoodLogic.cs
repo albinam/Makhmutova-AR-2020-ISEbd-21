@@ -1,7 +1,7 @@
 ﻿using DinerBusinessLogic.BindingModels;
 using DinerBusinessLogic.Interfaces;
 using DinerBusinessLogic.ViewModels;
-using DinerListImplement.Models;
+using DinerFileImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

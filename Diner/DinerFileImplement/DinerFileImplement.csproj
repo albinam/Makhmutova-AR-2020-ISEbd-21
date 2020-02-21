@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Diner\DinerBusinessLogic\DinerBusinessLogic.csproj" />
-    <ProjectReference Include="..\Diner\DinerListImplement\DinerListImplement.csproj" />
   </ItemGroup>
 
 </Project>

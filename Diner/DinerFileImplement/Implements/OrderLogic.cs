@@ -1,7 +1,7 @@
 ﻿using DinerBusinessLogic.BindingModels;
 using DinerBusinessLogic.Interfaces;
 using DinerBusinessLogic.ViewModels;
-using DinerListImplement.Models;
+using DinerFileImplement.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,31 +18,33 @@ namespace DinerFileImplement.Implements
         }
         public void CreateOrUpdate(OrderBindingModel model)
         {
-            Order tempOrder = model.Id.HasValue ? null : new Order { Id = 1 };
-            if (!model.Id.HasValue)
-            {
-                tempOrder.Id = source.Orders.FirstOrDefault(rec => rec.Id >= tempOrder.Id).Id + 1;
-            }
-            else
-            {
-                tempOrder = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
-            }
+            Order element;
             if (model.Id.HasValue)
             {
-                if (tempOrder == null)
+                element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element == null)
                 {
                     throw new Exception("Элемент не найден");
                 }
-                CreateModel(model, tempOrder);
             }
             else
             {
-                source.Orders.Add(CreateModel(model, tempOrder));
+                int maxId = source.Orders.Count > 0 ? source.Orders.Max(rec =>
+               rec.Id) : 0;
+                element = new Order { Id = maxId + 1 };
+                source.Orders.Add(element);
             }
+            element.SnackId = model.SnackId == 0 ? element.SnackId : model.SnackId;
+            element.Count = model.Count;
+            element.Sum = model.Sum;
+            element.Status = model.Status;
+            element.DateCreate = model.DateCreate;
+            element.DateImplement = model.DateImplement;
         }
         public void Delete(OrderBindingModel model)
         {
-            Order element = source.Orders.FirstOrDefault(rec => rec.Id == model.Id.Value);
+            Order element = source.Orders.FirstOrDefault(rec => rec.Id ==
+           model.Id);
             if (element != null)
             {
                 source.Orders.Remove(element);
@@ -51,53 +53,30 @@ namespace DinerFileImplement.Implements
             {
                 throw new Exception("Элемент не найден");
             }
-        } 
+        }
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
-            List<OrderViewModel> result = new List<OrderViewModel>();
-            if (model != null)
+            return source.Orders
+            .Where(rec => model == null || rec.Id == model.Id)
+            .Select(rec => new OrderViewModel
             {
-                result.Add(CreateViewModel(source.Orders.FirstOrDefault(rec => rec.Id == model.Id)));
-            }
-            else
-            {
-                result.AddRange(source.Orders.Select(rec => CreateViewModel(rec)));
-            }
-            return result;
+                Id = rec.Id,
+                SnackName = GetSnackName(rec.SnackId),
+                Count = rec.Count,
+                Sum = rec.Sum,
+                Status = rec.Status,
+                DateCreate = rec.DateCreate,
+                DateImplement = rec.DateImplement
+            })
+            .ToList();
         }
-        private Order CreateModel(OrderBindingModel model, Order order)
+
+        private string GetSnackName(int id)
         {
-            Snack Snack = source.Snacks.Where(rec => rec.Id == model.SnackId).FirstOrDefault();
-            if (Snack == null)
-            {
-                throw new Exception("Элемент не найден");
-            }
-            order.SnackId = model.SnackId;
-            order.Count = model.Count;
-            order.Sum = model.Count * Snack.Price;
-            order.Status = model.Status;
-            order.DateCreate = model.DateCreate;
-            order.DateImplement = model.DateImplement;
-            return order;
-        }
-        private OrderViewModel CreateViewModel(Order order)
-        {
-            Snack Snack = source.Snacks.Where(rec => rec.Id == order.SnackId).FirstOrDefault();
-            if (Snack == null)
-            {
-                throw new Exception("Элемент не найден");
-            }
-            return new OrderViewModel
-            {
-                Id = order.Id,
-                SnackId = order.SnackId,
-                SnackName = Snack.SnackName,
-                Count = order.Count,
-                Sum = order.Sum,
-                Status = order.Status,
-                DateCreate = order.DateCreate,
-                DateImplement = order.DateImplement
-            };
+            string name = "";
+            var Snack = source.Snacks.FirstOrDefault(x => x.Id == id);
+            name = Snack != null ? Snack.SnackName : "";
+            return name;
         }
     }
 }
