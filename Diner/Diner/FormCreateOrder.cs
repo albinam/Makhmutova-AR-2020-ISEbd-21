@@ -44,17 +44,12 @@ namespace DinerView
         }
         private void CalcSum()
         {
-            if (comboBoxSnack.SelectedValue != null &&
-           !string.IsNullOrEmpty(textBoxCount.Text))
+            if (comboBoxSnack.SelectedValue != null &&!string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
                 {
                     int id = Convert.ToInt32(comboBoxSnack.SelectedValue);
-                    SnackViewModel Snack = logicS.Read(new SnackBindingModel
-                    {
-                        Id =
-                    id
-                    })?[0];
+                    SnackViewModel Snack = logicS.Read(new SnackBindingModel { Id =id })?[0];
                     int count = Convert.ToInt32(textBoxCount.Text);
                     textBoxSum.Text = (count * Snack?.Price ?? 0).ToString();
                 }
