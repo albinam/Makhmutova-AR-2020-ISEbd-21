@@ -144,6 +144,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DinerFileImplement\DinerFileImplement.csproj">
+      <Project>{f04889f8-f85d-4836-ab5d-5c4531baaae8}</Project>
+      <Name>DinerFileImplement</Name>
+    </ProjectReference>
     <ProjectReference Include="DinerBusinessLogic\DinerBusinessLogic.csproj">
       <Project>{0f6768b4-eca3-4b3a-9b0f-88070f7f3107}</Project>
       <Name>DinerBusinessLogic</Name>

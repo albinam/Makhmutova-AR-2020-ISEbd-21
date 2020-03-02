@@ -1,6 +1,6 @@
 ﻿using DinerBusinessLogic;
 using DinerBusinessLogic.Interfaces;
-using DinerListImplement.Implements;
+using DinerFileImplement.Implements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
