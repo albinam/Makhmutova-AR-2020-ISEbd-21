@@ -2,6 +2,7 @@
 using DinerBusinessLogic.Interfaces;
 using DinerBusinessLogic.ViewModels;
 using DinerDatabaseImplement.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,6 +62,7 @@ model.Id);
             using (var context = new DinerDatabase())
             {
                 return context.Orders
+            .Include(rec => rec.Snack)
             .Where(rec => model == null || rec.Id == model.Id)
             .Select(rec => new OrderViewModel
             {
