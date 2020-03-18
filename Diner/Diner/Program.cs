@@ -1,4 +1,5 @@
 ﻿using DinerBusinessLogic;
+using DinerBusinessLogic.BuisinessLogics;
 using DinerBusinessLogic.Interfaces;
 using DinerDatabaseImplement.Implements;
 using System;
@@ -31,6 +32,8 @@ namespace DinerView
             currentContainer.RegisterType<IOrderLogic, OrderLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<MainLogic>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<ReportLogic>(new
+           HierarchicalLifetimeManager());
             return currentContainer;
         }
     }
