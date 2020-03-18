@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DinerBusinessLogic.BuisinessLogics
+namespace DinerBusinessLogic.BusinessLogics
 {
     public class ReportLogic
     {
@@ -15,11 +15,11 @@ namespace DinerBusinessLogic.BuisinessLogics
         private readonly ISnackLogic SnackLogic;
         private readonly IOrderLogic orderLogic;
         public ReportLogic(ISnackLogic SnackLogic, IFoodLogic FoodLogic,
-       IOrderLogic orderLLogic)
+       IOrderLogic orderLogic)
         {
             this.SnackLogic = SnackLogic;
             this.FoodLogic = FoodLogic;
-            this.orderLogic = orderLLogic;
+            this.orderLogic = orderLogic;
         }
         /// <summary>
         /// Получение списка компонент с указанием, в каких изделиях используются
@@ -83,7 +83,7 @@ namespace DinerBusinessLogic.BuisinessLogics
             SaveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
+                Title = "Список продуктов",
                 Foods = FoodLogic.Read(null)
             });
         }
@@ -96,7 +96,7 @@ namespace DinerBusinessLogic.BuisinessLogics
             SaveToExcel.CreateDoc(new ExcelInfo
             {
                 FileName = model.FileName,
-                Title = "Список компонент",
+                Title = "Список продуктов",
                 SnackFoods = GetSnackFood()
             });
         }

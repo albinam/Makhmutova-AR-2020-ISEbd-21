@@ -9,7 +9,7 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Linq;
 
-namespace DinerBusinessLogic.BuisinessLogics
+namespace DinerBusinessLogic.BusinessLogics
 {
     static class SaveToExcel
     {

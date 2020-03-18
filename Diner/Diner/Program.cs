@@ -1,5 +1,5 @@
 ﻿using DinerBusinessLogic;
-using DinerBusinessLogic.BuisinessLogics;
+using DinerBusinessLogic.BusinessLogics;
 using DinerBusinessLogic.Interfaces;
 using DinerDatabaseImplement.Implements;
 using System;

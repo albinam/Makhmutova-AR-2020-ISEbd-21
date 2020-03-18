@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DinerBusinessLogic.BuisinessLogics
+namespace DinerBusinessLogic.BusinessLogics
 {
     static class SaveToWord
     {

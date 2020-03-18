@@ -5,7 +5,7 @@ using System.Text;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;using MigraDoc.Rendering;
 
-namespace DinerBusinessLogic.BuisinessLogics
+namespace DinerBusinessLogic.BusinessLogics
 {
     class SaveToPdf
     {

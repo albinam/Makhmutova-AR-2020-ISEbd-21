@@ -1,5 +1,5 @@
 ﻿using DinerBusinessLogic.BindingModels;
-using DinerBusinessLogic.BuisinessLogics;
+using DinerBusinessLogic.BusinessLogics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
