@@ -72,7 +72,7 @@ namespace DinerBusinessLogic.BusinessLogics
                 Sum = x.Sum,
                 Status = x.Status
             })
-           .ToList();
+            .ToList();
         }
         /// <summary>
         /// Сохранение компонент в файл-Word

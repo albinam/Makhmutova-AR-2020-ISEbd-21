@@ -18,13 +18,13 @@ namespace DinerBusinessLogic.BusinessLogics
             paragraph.Format.SpaceAfter = "1cm";
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Style = "NormalTitle";
-            paragraph = section.AddParagraph($"с {info.DateFrom.ToShortDateString()} по { info.DateTo.ToShortDateString()}");
+            paragraph = section.AddParagraph($"с {info.DateFrom.ToShortDateString()} по { info.DateTo.ToShortDateString()} ");
             paragraph.Format.SpaceAfter = "1cm";
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Style = "Normal";
             var table = document.LastSection.AddTable();
-            List<string> columns = new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm"
-};
+            List<string> columns = new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm" };
+
             foreach (var elem in columns)
             {
                 table.AddColumn(elem);
@@ -32,8 +32,7 @@ namespace DinerBusinessLogic.BusinessLogics
             CreateRow(new PdfRowParameters
             {
                 Table = table,
-                Texts = new List<string> { "Дата заказа", "Изделие", "Количество",
-"Сумма", "Статус" },
+                Texts = new List<string> { "Дата заказа", "Изделие", "Количество", "Сумма", "Статус" },
                 Style = "NormalTitle",
                 ParagraphAlignment = ParagraphAlignment.Center
             });
@@ -42,25 +41,25 @@ namespace DinerBusinessLogic.BusinessLogics
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
-                    Texts = new List<string> { order.DateCreate.ToShortDateString(),
-order.SnackName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToString()
-},
+                    Texts = new List<string>
+                    {
+                        order.DateCreate.ToShortDateString(),
+                        order.SnackName,
+                        order.Count.ToString(),
+                        order.Sum.ToString(),
+                        order.Status.ToString()
+                    },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left
                 });
             }
-            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true,
-           PdfSharp.Pdf.PdfFontEmbedding.Always)
+            PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
             {
                 Document = document
             };
             renderer.RenderDocument();
             renderer.PdfDocument.Save(info.FileName);
         }
-        /// <summary>
-        /// Создание стилей для документа
-        /// </summary>
-        /// <param name="document"></param>
         private static void DefineStyles(Document document)
         {
             Style style = document.Styles["Normal"];
@@ -69,10 +68,6 @@ order.SnackName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToSt
             style = document.Styles.AddStyle("NormalTitle", "Normal");
             style.Font.Bold = true;
         }
-        /// <summary>
-        /// Создание и заполнение строки
-        /// </summary>
-        /// <param name="rowParameters"></param>
         private static void CreateRow(PdfRowParameters rowParameters)
         {
             Row row = rowParameters.Table.AddRow();
@@ -88,10 +83,6 @@ order.SnackName, order.Count.ToString(), order.Sum.ToString(), order.Status.ToSt
                 });
             }
         }
-        /// <summary>
-        /// Заполнение ячейки
-        /// </summary>
-        /// <param name="cellParameters"></param>
         private static void FillCell(PdfCellParameters cellParameters)
         {
             cellParameters.Cell.AddParagraph(cellParameters.Text);
