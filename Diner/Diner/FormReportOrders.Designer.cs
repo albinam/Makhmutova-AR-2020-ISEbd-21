@@ -112,6 +112,7 @@
             this.Controls.Add(this.dateTimePickerFrom);
             this.Name = "FormReportOrders";
             this.Text = "Отчеты";
+            this.Load += new System.EventHandler(this.FormReportOrders_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

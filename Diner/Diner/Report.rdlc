@@ -194,7 +194,7 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox11">
+                        <Textbox Name="Textbox2">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
@@ -208,7 +208,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox11</rd:DefaultName>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -356,6 +356,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
+                                  <Label>Status</Label>
                                   <Value>=Fields!Status.Value</Value>
                                   <Style />
                                 </TextRun>
@@ -363,7 +364,6 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Status</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -375,6 +375,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -404,7 +405,7 @@
             <Top>2.65974cm</Top>
             <Left>1.10807cm</Left>
             <Height>1.38521cm</Height>
-            <Width>19.40563cm</Width>
+            <Width>19.40561cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -539,7 +540,7 @@
         <Height>2.59375in</Height>
         <Style />
       </Body>
-      <Width>8.56076in</Width>
+      <Width>9.0605in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
