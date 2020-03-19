@@ -4,6 +4,7 @@ using DinerBusinessLogic.ViewModels;
 using DinerListImplement.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DinerListImplement.Implements
@@ -156,6 +157,42 @@ namespace DinerListImplement.Implements
                 }
             }
             throw new Exception("Элемент не найден");
+        }
+        public bool CheckFoodsAvailability(int SnackId, int SnacksCount)
+        {
+            bool result = true;
+            var SnackFoods = source.SnackFoods.Where(x => x.SnackId == SnackId);
+            if (SnackFoods.Count() == 0) return false;
+            foreach (var elem in SnackFoods)
+            {
+                int count = 0;
+                var storageFoods = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId);
+                foreach (var rec in storageFoods)
+                {
+                    count += rec.Count;
+                }
+                if (count < elem.Count * SnacksCount) result = false;
+            }
+            return result;
+        }
+
+        public void RemoveFromStorage(int SnackId, int SnacksCount)
+        {
+            var SnackFoods = source.SnackFoods.Where(x => x.SnackId == SnackId);
+            if (SnackFoods.Count() == 0) return;
+            foreach (var elem in SnackFoods)
+            {
+                int left = elem.Count * SnacksCount;
+                var storageFoods = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId);
+                foreach (var rec in storageFoods)
+                {
+                    int toRemove = left > rec.Count ? rec.Count : left;
+                    rec.Count -= toRemove;
+                    left -= toRemove;
+                    if (left == 0) break;
+                }
+            }
+            return;
         }
         public void FillStorage(StorageFoodBindingModel model)
         {
