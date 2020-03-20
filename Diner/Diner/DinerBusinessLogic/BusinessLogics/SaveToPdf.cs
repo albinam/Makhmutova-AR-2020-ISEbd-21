@@ -18,12 +18,9 @@ namespace DinerBusinessLogic.BusinessLogics
             paragraph.Format.SpaceAfter = "1cm";
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Style = "NormalTitle";
-            paragraph = section.AddParagraph($"с {info.DateFrom.ToShortDateString()} по { info.DateTo.ToShortDateString()} ");
-            paragraph.Format.SpaceAfter = "1cm";
-            paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Style = "Normal";
             var table = document.LastSection.AddTable();
-            List<string> columns = new List<string> { "3cm", "6cm", "3cm", "2cm", "3cm" };
+            List<string> columns = new List<string> { "6cm", "6cm", "6cm" };
 
             foreach (var elem in columns)
             {
@@ -32,26 +29,22 @@ namespace DinerBusinessLogic.BusinessLogics
             CreateRow(new PdfRowParameters
             {
                 Table = table,
-                Texts = new List<string> { "Дата заказа", "Изделие", "Количество", "Сумма", "Статус" },
+                Texts = new List<string> { "Закуска", "Продукт", "Количество" },
                 Style = "NormalTitle",
                 ParagraphAlignment = ParagraphAlignment.Center
             });
-            foreach (var order in info.Orders)
-            {
-                CreateRow(new PdfRowParameters
+            foreach (var sf in info.SnackFoods)
+            { 
+                foreach(var snack in sf.Snacks)
                 {
-                    Table = table,
-                    Texts = new List<string>
+                    CreateRow(new PdfRowParameters
                     {
-                        order.DateCreate.ToShortDateString(),
-                        order.SnackName,
-                        order.Count.ToString(),
-                        order.Sum.ToString(),
-                        order.Status.ToString()
-                    },
-                    Style = "Normal",
-                    ParagraphAlignment = ParagraphAlignment.Left
-                });
+                        Table = table,
+                        Texts = new List<string> { snack.Item1, sf.FoodName, snack.Item2.ToString() },
+                        Style = "Normal",
+                        ParagraphAlignment = ParagraphAlignment.Left
+                    });
+                }              
             }
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
             {

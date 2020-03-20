@@ -31,7 +31,17 @@ namespace DinerBusinessLogic.BusinessLogics
                 {
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
-                        Texts = new List<string> { snack.SnackName, snack.Price.ToString() },
+                        Texts = new List<string> { snack.SnackName },
+                        TextProperties = new WordParagraphProperties
+                        {
+                            Size = "24",
+                            JustificationValues = JustificationValues.Both,
+                            Bold = true,
+                        }
+                    }));
+                    docBody.AppendChild(CreateParagraph(new WordParagraph
+                    {
+                        Texts = new List<string> {"Цена: "+ snack.Price },
                         TextProperties = new WordParagraphProperties
                         {
                             Size = "24",

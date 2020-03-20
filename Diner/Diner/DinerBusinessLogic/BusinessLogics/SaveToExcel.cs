@@ -53,25 +53,17 @@ namespace DinerBusinessLogic.BusinessLogics
                     ShareStringPart = shareStringPart,
                     ColumnName = "A",
                     RowIndex = 1,
-                    Text = info.Title,
+                    Text = info.Title + " с " + info.DateFrom.ToShortDateString() + " по " + info.DateTo.ToShortDateString(),
                     StyleIndex = 2U
                 });
                 MergeCells(new ExcelMergeParameters
                 {
                     Worksheet = worksheetPart.Worksheet,
                     CellFromName = "A1",
-                    CellToName = "C1"
+                    CellToName = "F1"
                 });
-                InsertCellInWorksheet(new ExcelCellParameters
-                {
-                    Worksheet = worksheetPart.Worksheet,
-                    ShareStringPart = shareStringPart,
-                    ColumnName = "A",
-                    RowIndex = 2,
-                    Text = "с {info.DateFrom.ToShortDateString()} по { info.DateTo.ToShortDateString()} ",
-                    StyleIndex = 2U
-                });
-                uint rowIndex = 3;
+                uint rowIndex = 2;
+                decimal Total = 0;
                 foreach (var order in info.Orders)
                 {
                     InsertCellInWorksheet(new ExcelCellParameters
@@ -83,7 +75,6 @@ namespace DinerBusinessLogic.BusinessLogics
                         Text = order.DateCreate.ToShortDateString(),
                         StyleIndex = 0U
                     });
-                    rowIndex++;
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         Worksheet = worksheetPart.Worksheet,
@@ -102,21 +93,29 @@ namespace DinerBusinessLogic.BusinessLogics
                         Text = order.Sum.ToString(),
                         StyleIndex = 0U
                     });
+                    Total = Total + order.Sum;
                     rowIndex++;
                 }
-                workbookpart.Workbook.Save();
-                /*InsertCellInWorksheet(new ExcelCellParameters
+                InsertCellInWorksheet(new ExcelCellParameters
+                {
+                    Worksheet = worksheetPart.Worksheet,
+                    ShareStringPart = shareStringPart,
+                    ColumnName = "A",
+                    RowIndex = rowIndex,
+                    Text = "Общая сумма:",
+                    StyleIndex = 0U
+                });
+                InsertCellInWorksheet(new ExcelCellParameters
                 {
                     Worksheet = worksheetPart.Worksheet,
                     ShareStringPart = shareStringPart,
                     ColumnName = "C",
                     RowIndex = rowIndex,
-                    Text = sf.TotalCount.ToString(),
+                    Text = Total.ToString(),
                     StyleIndex = 0U
                 });
-                rowIndex++;*/
-            }
-            
+                workbookpart.Workbook.Save();
+            }        
         }
         /// <summary>
         /// Настройка стилей для файла

@@ -52,6 +52,25 @@ namespace DinerBusinessLogic.BusinessLogics
             }
             return list;
         }
+       /* public List<ReportSnacksViewModel> GetSnacks()
+        {
+            var list = new List<ReportSnacksViewModel>();
+            var Snacks = SnackLogic.Read(null);
+            foreach (var snack in Snacks)
+            {
+                foreach (var food in snack.SnackFoods)
+                {
+                    var snackRecord = new ReportSnacksViewModel
+                    {
+                        SnackName = snack.SnackName,
+                        FoodName = food.Item1,
+                        Count = food.Count
+                    };
+                    list.Add(snackRecord);
+                }
+            }
+            return list;
+        }*/
         /// <summary>
         /// Получение списка заказов за определенный период
         /// </summary>
@@ -83,7 +102,7 @@ namespace DinerBusinessLogic.BusinessLogics
             SaveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
-                Title = "Список продуктов",
+                Title = "Список закусок",
                 Snacks = SnackLogic.Read(null)
             });
         }
@@ -98,23 +117,21 @@ namespace DinerBusinessLogic.BusinessLogics
                 DateFrom = model.DateFrom.Value,
                 DateTo = model.DateTo.Value,
                 FileName = model.FileName,
-                Title = "Список продуктов",
+                Title = "Список заказов",
                 Orders = GetOrders(model)
             });
         }
         /// <summary>
-        /// Сохранение заказов в файл-Pdf
+        /// Сохранение закусок с продуктами в файл-Pdf
         /// </summary>
         /// <param name="model"></param>
-        public void SaveOrdersToPdfFile(ReportBindingModel model)
+        public void SaveSnacksToPdfFile(ReportBindingModel model)
         {
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
-                Title = "Список заказов",
-                DateFrom = model.DateFrom.Value,
-                DateTo = model.DateTo.Value,
-                Orders = GetOrders(model)
+                Title = "Список закусок по продуктам",
+                SnackFoods=GetSnackFood(),
             });
         }
     }
