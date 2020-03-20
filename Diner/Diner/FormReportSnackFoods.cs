@@ -1,5 +1,6 @@
 ﻿using DinerBusinessLogic.BindingModels;
 using DinerBusinessLogic.BusinessLogics;
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,28 +24,21 @@ namespace Diner
             InitializeComponent();
             this.logic = logic;
         }
-        private void FormReportSnackFoods_Load(object sender, EventArgs e)
+        private void ButtonMake_Click(object sender, EventArgs e)
         {
+            if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
+            {
+                MessageBox.Show("Дата начала должна быть меньше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try
             {
-                var dict = logic.GetSnackFood();
-                if (dict != null)
-                {
-                    dataGridView.Rows.Clear();
-                    foreach (var elem in dict)
-                    {
-                        dataGridView.Rows.Add(new object[] { elem.FoodName, "", ""
-});
-                        foreach (var listElem in elem.Snacks)
-                        {
-                            dataGridView.Rows.Add(new object[] { "", listElem.Item1,
-listElem.Item2 });
-                        }
-                        dataGridView.Rows.Add(new object[] { "Итого", "", elem.TotalCount
-});
-                        dataGridView.Rows.Add(new object[] { });
-                    }
-                }
+                ReportParameter parameter = new ReportParameter("ReportParameterPeriod", "c " + dateTimePickerFrom.Value.ToShortDateString() + " по " + dateTimePickerTo.Value.ToShortDateString());
+                reportViewer.LocalReport.SetParameters(parameter);
+                var dataSource = logic.GetOrders(new ReportBindingModel { DateFrom = dateTimePickerFrom.Value, DateTo = dateTimePickerTo.Value });
+                ReportDataSource source = new ReportDataSource("DataSetOrders", dataSource);
+                reportViewer.LocalReport.DataSources.Add(source);
+                reportViewer.RefreshReport();
             }
             catch (Exception ex)
             {
@@ -52,28 +46,38 @@ listElem.Item2 });
                MessageBoxIcon.Error);
             }
         }
-        private void buttonSaveToExcel_Click(object sender, EventArgs e)
+        private void ButtonToPdf_Click(object sender, EventArgs e)
         {
-            using (var dialog = new SaveFileDialog { Filter = "xlsx|*.xlsx" })
+            if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
+            {
+                MessageBox.Show("Дата начала должна быть меньше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            using (var dialog = new SaveFileDialog { Filter = "pdf|*.pdf" })
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        logic.SaveSnackFoodToExcelFile(new ReportBindingModel
+                        logic.SaveOrdersToPdfFile(new ReportBindingModel
                         {
-                            FileName = dialog.FileName
+                            FileName = dialog.FileName,
+                            DateFrom = dateTimePickerFrom.Value,
+                            DateTo = dateTimePickerTo.Value
                         });
-                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                        MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                       MessageBoxIcon.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
+        }
+
+        private void FormReportOrders_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -78,26 +78,28 @@ namespace DinerBusinessLogic.BusinessLogics
         /// Сохранение компонент в файл-Word
         /// </summary>
         /// <param name="model"></param>
-        public void SaveFoodsToWordFile(ReportBindingModel model)
+        public void SaveSnacksToWordFile(ReportBindingModel model)
         {
             SaveToWord.CreateDoc(new WordInfo
             {
                 FileName = model.FileName,
                 Title = "Список продуктов",
-                Foods = FoodLogic.Read(null)
+                Snacks = SnackLogic.Read(null)
             });
         }
         /// <summary>
         /// Сохранение компонент с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>
-        public void SaveSnackFoodToExcelFile(ReportBindingModel model)
+        public void SaveOrdersToExcelFile(ReportBindingModel model)
         {
             SaveToExcel.CreateDoc(new ExcelInfo
             {
+                DateFrom = model.DateFrom.Value,
+                DateTo = model.DateTo.Value,
                 FileName = model.FileName,
                 Title = "Список продуктов",
-                SnackFoods = GetSnackFood()
+                Orders = GetOrders(model)
             });
         }
         /// <summary>

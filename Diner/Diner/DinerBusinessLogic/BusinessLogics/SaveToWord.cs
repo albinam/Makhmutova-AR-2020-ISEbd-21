@@ -27,11 +27,11 @@ namespace DinerBusinessLogic.BusinessLogics
                         JustificationValues = JustificationValues.Center
                     }
                 }));
-                foreach (var food in info.Foods)
+                foreach (var snack in info.Snacks)
                 {
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
-                        Texts = new List<string> { food.FoodName },
+                        Texts = new List<string> { snack.SnackName, snack.Price.ToString() },
                         TextProperties = new WordParagraphProperties
                         {
                             Size = "24",

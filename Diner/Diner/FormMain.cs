@@ -134,7 +134,7 @@ namespace DinerView
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    report.SaveFoodsToWordFile(new ReportBindingModel
+                    report.SaveSnacksToWordFile(new ReportBindingModel
                     {
                         FileName =
                    dialog.FileName
@@ -146,13 +146,13 @@ namespace DinerView
         }
         private void продуктыПоЗакускамToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormReportSnackFoods>();
+            var form = Container.Resolve<FormReportOrders>();
             form.ShowDialog();
         }
 
         private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = Container.Resolve<FormReportOrders>();
+            var form = Container.Resolve<FormReportSnackFoods>();
             form.ShowDialog();
         }
     }

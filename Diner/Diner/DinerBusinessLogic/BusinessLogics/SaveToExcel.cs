@@ -62,8 +62,17 @@ namespace DinerBusinessLogic.BusinessLogics
                     CellFromName = "A1",
                     CellToName = "C1"
                 });
-                uint rowIndex = 2;
-                foreach (var sf in info.SnackFoods)
+                InsertCellInWorksheet(new ExcelCellParameters
+                {
+                    Worksheet = worksheetPart.Worksheet,
+                    ShareStringPart = shareStringPart,
+                    ColumnName = "A",
+                    RowIndex = 2,
+                    Text = "с {info.DateFrom.ToShortDateString()} по { info.DateTo.ToShortDateString()} ",
+                    StyleIndex = 2U
+                });
+                uint rowIndex = 3;
+                foreach (var order in info.Orders)
                 {
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
@@ -71,45 +80,43 @@ namespace DinerBusinessLogic.BusinessLogics
                         ShareStringPart = shareStringPart,
                         ColumnName = "A",
                         RowIndex = rowIndex,
-                        Text = sf.FoodName,
+                        Text = order.DateCreate.ToShortDateString(),
                         StyleIndex = 0U
                     });
                     rowIndex++;
-                    foreach (var snack in sf.Snacks)
+                    InsertCellInWorksheet(new ExcelCellParameters
                     {
-                        InsertCellInWorksheet(new ExcelCellParameters
-                        {
-                            Worksheet = worksheetPart.Worksheet,
-                            ShareStringPart = shareStringPart,
-                            ColumnName = "B",
-                            RowIndex = rowIndex,
-                            Text = snack.Item1,
-                            StyleIndex = 1U
-                        });
-                        InsertCellInWorksheet(new ExcelCellParameters
-                        {
-                            Worksheet = worksheetPart.Worksheet,
-                            ShareStringPart = shareStringPart,
-                            ColumnName = "C",
-                            RowIndex = rowIndex,
-                            Text = snack.Item2.ToString(),
-                            StyleIndex = 1U
-                        });
-                        rowIndex++;
-                    }
+                        Worksheet = worksheetPart.Worksheet,
+                        ShareStringPart = shareStringPart,
+                        ColumnName = "B",
+                        RowIndex = rowIndex,
+                        Text = order.SnackName,
+                        StyleIndex = 0U
+                    });
                     InsertCellInWorksheet(new ExcelCellParameters
                     {
                         Worksheet = worksheetPart.Worksheet,
                         ShareStringPart = shareStringPart,
                         ColumnName = "C",
                         RowIndex = rowIndex,
-                        Text = sf.TotalCount.ToString(),
+                        Text = order.Sum.ToString(),
                         StyleIndex = 0U
                     });
                     rowIndex++;
                 }
                 workbookpart.Workbook.Save();
+                /*InsertCellInWorksheet(new ExcelCellParameters
+                {
+                    Worksheet = worksheetPart.Worksheet,
+                    ShareStringPart = shareStringPart,
+                    ColumnName = "C",
+                    RowIndex = rowIndex,
+                    Text = sf.TotalCount.ToString(),
+                    StyleIndex = 0U
+                });
+                rowIndex++;*/
             }
+            
         }
         /// <summary>
         /// Настройка стилей для файла
@@ -246,7 +253,7 @@ namespace DinerBusinessLogic.BusinessLogics
            VerticalAlignmentValues.Center,
                     WrapText = true,
                     Horizontal =
-HorizontalAlignmentValues.Center
+    HorizontalAlignmentValues.Center
                 },
                 ApplyFont = true
             };
@@ -328,7 +335,7 @@ HorizontalAlignmentValues.Center
            cellParameters.RowIndex).Count() != 0)
             {
                 row = sheetData.Elements<Row>().Where(r => r.RowIndex ==
-cellParameters.RowIndex).First();
+    cellParameters.RowIndex).First();
             }
             else
             {
