@@ -63,7 +63,7 @@ namespace DinerDatabaseImplement.Implements
                 .Where(
                     rec => model == null
                     || (rec.Id == model.Id && model.Id.HasValue)
-                    || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo)
+                    || model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo
                 )
                 .Select(rec => new OrderViewModel
                 {

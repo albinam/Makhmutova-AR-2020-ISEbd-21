@@ -30,52 +30,24 @@ namespace DinerBusinessLogic.BusinessLogics
             var Foods = FoodLogic.Read(null);
             var Snacks = SnackLogic.Read(null);
             var list = new List<ReportSnackFoodViewModel>();
-            foreach (var Food in Foods)
+            foreach (var food in Foods)
             {
-                var record = new ReportSnackFoodViewModel
+                foreach (var snack in Snacks)
                 {
-                    FoodName = Food.FoodName,
-                    Snacks = new List<Tuple<string, int>>(),
-                    TotalCount = 0
-                };
-                foreach (var Snack in Snacks)
-                {
-                    if (Snack.SnackFoods.ContainsKey(Food.Id))
+                    if (snack.SnackFoods.ContainsKey(food.Id))
                     {
-                        record.Snacks.Add(new Tuple<string, int>(Snack.SnackName,
-                       Snack.SnackFoods[Food.Id].Item2));
-                        record.TotalCount +=
-                       Snack.SnackFoods[Food.Id].Item2;
+                        var record = new ReportSnackFoodViewModel
+                        {
+                            SnackName = snack.SnackName,
+                            FoodName = food.FoodName,
+                            Count = snack.SnackFoods[food.Id].Item2
+                        };
+                        list.Add(record);
                     }
                 }
-                list.Add(record);
             }
             return list;
         }
-       /* public List<ReportSnacksViewModel> GetSnacks()
-        {
-            var list = new List<ReportSnacksViewModel>();
-            var Snacks = SnackLogic.Read(null);
-            foreach (var snack in Snacks)
-            {
-                foreach (var food in snack.SnackFoods)
-                {
-                    var snackRecord = new ReportSnacksViewModel
-                    {
-                        SnackName = snack.SnackName,
-                        FoodName = food.Item1,
-                        Count = food.Count
-                    };
-                    list.Add(snackRecord);
-                }
-            }
-            return list;
-        }*/
-        /// <summary>
-        /// Получение списка заказов за определенный период
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
         public List<ReportOrdersViewModel> GetOrders(ReportBindingModel model)
         {
             return orderLogic.Read(new OrderBindingModel
@@ -107,7 +79,7 @@ namespace DinerBusinessLogic.BusinessLogics
             });
         }
         /// <summary>
-        /// Сохранение компонент с указаеним продуктов в файл-Excel
+        /// Сохранение закусок с указаеним продуктов в файл-Excel
         /// </summary>
         /// <param name="model"></param>
         public void SaveOrdersToExcelFile(ReportBindingModel model)
@@ -131,7 +103,7 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список закусок по продуктам",
-                SnackFoods=GetSnackFood(),
+                SnackFoods = GetSnackFood(),
             });
         }
     }

@@ -34,17 +34,19 @@ namespace DinerBusinessLogic.BusinessLogics
                 ParagraphAlignment = ParagraphAlignment.Center
             });
             foreach (var sf in info.SnackFoods)
-            { 
-                foreach(var snack in sf.Snacks)
+            {
+                CreateRow(new PdfRowParameters
                 {
-                    CreateRow(new PdfRowParameters
+                    Table = table,
+                    Texts = new List<string>
                     {
-                        Table = table,
-                        Texts = new List<string> { snack.Item1, sf.FoodName, snack.Item2.ToString() },
-                        Style = "Normal",
-                        ParagraphAlignment = ParagraphAlignment.Left
-                    });
-                }              
+                        sf.SnackName,
+                        sf.FoodName,
+                        sf.Count.ToString()
+                    },
+                    Style = "Normal",
+                    ParagraphAlignment = ParagraphAlignment.Left
+                });
             }
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
             {

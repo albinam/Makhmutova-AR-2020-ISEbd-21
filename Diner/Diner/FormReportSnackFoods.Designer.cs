@@ -72,9 +72,7 @@
             this.Controls.Add(this.buttonMake);
             this.Name = "FormReportSnackFoods";
             this.Text = "Отчеты";
-            this.Load += new System.EventHandler(this.FormReportSnackFoods_Load);
             this.ResumeLayout(false);
-
         }
 
         #endregion
