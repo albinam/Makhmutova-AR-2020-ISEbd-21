@@ -134,11 +134,9 @@ namespace DinerFileImplement.Implements
             {
                 int count = 0;
                 var storageFoods = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId);
-                foreach (var rec in storageFoods)
-                {
-                    count += rec.Count;
-                }
-                if (count < elem.Count * SnacksCount) result = false;
+                count = storageFoods.Sum(x=> x.Count);
+                if (count < elem.Count * SnacksCount)
+                    return false;
             }
             return result;
         }
