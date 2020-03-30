@@ -71,8 +71,9 @@
             this.Controls.Add(this.buttonToPdf);
             this.Controls.Add(this.buttonMake);
             this.Name = "FormReportSnackFoods";
-            this.Text = "Отчеты";
+            this.Text = "Отчет по закускам с продуктами";
             this.ResumeLayout(false);
+
         }
 
         #endregion
