@@ -10,9 +10,11 @@ namespace DinerBusinessLogic
     public class MainLogic
     {
         private readonly IOrderLogic orderLogic;
-        public MainLogic(IOrderLogic orderLogic)
+        private readonly IStorageLogic storageLogic;
+        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.orderLogic = orderLogic;
+            this.storageLogic = storageLogic;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -36,6 +38,10 @@ namespace DinerBusinessLogic
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
+            if (!storageLogic.CheckFoodsAvailability(order.SnackId, order.Count))
+            {
+                throw new Exception("На складах не хватает продуктов");
+            }
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
@@ -46,6 +52,7 @@ namespace DinerBusinessLogic
                 DateImplement = DateTime.Now,
                 Status = OrderStatus.Выполняется
             });
+            storageLogic.RemoveFromStorage(order.SnackId, order.Count);
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
@@ -90,6 +97,10 @@ namespace DinerBusinessLogic
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
             });
+        }
+        public void FillStorage(StorageFoodBindingModel model)
+        {
+            storageLogic.FillStorage(model);
         }
     }
 }
