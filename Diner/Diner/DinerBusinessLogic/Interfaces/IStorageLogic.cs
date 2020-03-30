@@ -14,7 +14,6 @@ namespace DinerBusinessLogic.Interfaces
         void UpdElement(StorageBindingModel model);
         void DelElement(int id);
         void FillStorage(StorageFoodBindingModel model);
-        bool CheckFoodsAvailability(int snackId, int snacksCount);
         void RemoveFromStorage(int snackId, int snacksCount);
     }
 }

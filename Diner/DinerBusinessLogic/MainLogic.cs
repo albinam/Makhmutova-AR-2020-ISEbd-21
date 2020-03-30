@@ -10,11 +10,9 @@ namespace DinerBusinessLogic
     public class MainLogic
     {
         private readonly IOrderLogic orderLogic;
-        private readonly IStorageLogic storageLogic;
-        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
+        public MainLogic(IOrderLogic orderLogic)
         {
             this.orderLogic = orderLogic;
-            this.storageLogic = storageLogic;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -38,24 +36,16 @@ namespace DinerBusinessLogic
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            try
+            orderLogic.CreateOrUpdate(new OrderBindingModel
             {
-                storageLogic.RemoveFromStorage(order.SnackId, order.Count);
-                orderLogic.CreateOrUpdate(new OrderBindingModel
-                {
-                    Id = order.Id,
-                    SnackId = order.SnackId,
-                    Count = order.Count,
-                    Sum = order.Sum,
-                    DateCreate = order.DateCreate,
-                    DateImplement = DateTime.Now,
-                    Status = OrderStatus.Выполняется
-                });
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                Id = order.Id,
+                SnackId = order.SnackId,
+                Count = order.Count,
+                Sum = order.Sum,
+                DateCreate = order.DateCreate,
+                DateImplement = DateTime.Now,
+                Status = OrderStatus.Выполняется
+            });
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
@@ -100,10 +90,6 @@ namespace DinerBusinessLogic
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
             });
-        }
-        public void FillStorage(StorageFoodBindingModel model)
-        {
-            storageLogic.FillStorage(model);
         }
     }
 }

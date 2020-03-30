@@ -6,14 +6,12 @@ using System.Text;
 
 namespace DinerDatabaseImplement.Models
 {
-    public class Food
+    public class Storage
     {
         public int Id { get; set; }
         [Required]
-        public string FoodName { get; set; }
-        [ForeignKey("FoodId")]
-        public virtual List<SnackFood> SnackFoods { get; set; }
-        [ForeignKey("FoodId")]
+        public string StorageName { get; set; }
+        [ForeignKey("StorageId")]
         public virtual List<StorageFood> StorageFoods { get; set; }
     }
 }
