@@ -34,8 +34,8 @@
             this.закускиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.отчетыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокПродуктовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.продуктыПоЗакускамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокЗаказовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.закускиПоПродуктамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.buttonCreateOrder = new System.Windows.Forms.Button();
             this.buttonTakeOrderInWork = new System.Windows.Forms.Button();
@@ -86,8 +86,8 @@
             // 
             this.отчетыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.списокПродуктовToolStripMenuItem,
-            this.продуктыПоЗакускамToolStripMenuItem,
-            this.списокЗаказовToolStripMenuItem});
+            this.списокЗаказовToolStripMenuItem,
+            this.закускиПоПродуктамToolStripMenuItem});
             this.отчетыToolStripMenuItem.Name = "отчетыToolStripMenuItem";
             this.отчетыToolStripMenuItem.Size = new System.Drawing.Size(60, 22);
             this.отчетыToolStripMenuItem.Text = "Отчеты";
@@ -95,23 +95,23 @@
             // списокПродуктовToolStripMenuItem
             // 
             this.списокПродуктовToolStripMenuItem.Name = "списокПродуктовToolStripMenuItem";
-            this.списокПродуктовToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.списокПродуктовToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.списокПродуктовToolStripMenuItem.Text = "Список закусок";
             this.списокПродуктовToolStripMenuItem.Click += new System.EventHandler(this.списокПродуктовToolStripMenuItem_Click);
-            // 
-            // продуктыПоЗакускамToolStripMenuItem
-            // 
-            this.продуктыПоЗакускамToolStripMenuItem.Name = "продуктыПоЗакускамToolStripMenuItem";
-            this.продуктыПоЗакускамToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.продуктыПоЗакускамToolStripMenuItem.Text = "Список заказов";
-            this.продуктыПоЗакускамToolStripMenuItem.Click += new System.EventHandler(this.продуктыПоЗакускамToolStripMenuItem_Click);
             // 
             // списокЗаказовToolStripMenuItem
             // 
             this.списокЗаказовToolStripMenuItem.Name = "списокЗаказовToolStripMenuItem";
             this.списокЗаказовToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.списокЗаказовToolStripMenuItem.Text = "Закуски по продуктам";
+            this.списокЗаказовToolStripMenuItem.Text = "Список заказов";
             this.списокЗаказовToolStripMenuItem.Click += new System.EventHandler(this.списокЗаказовToolStripMenuItem_Click);
+            // 
+            // закускиПоПродуктамToolStripMenuItem
+            // 
+            this.закускиПоПродуктамToolStripMenuItem.Name = "закускиПоПродуктамToolStripMenuItem";
+            this.закускиПоПродуктамToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.закускиПоПродуктамToolStripMenuItem.Text = "Закуски по продуктам";
+            this.закускиПоПродуктамToolStripMenuItem.Click += new System.EventHandler(this.закускиПоПродуктамToolStripMenuItem_Click);
             // 
             // dataGridView
             // 
@@ -220,7 +220,7 @@
         private System.Windows.Forms.Button buttonRef;
         private System.Windows.Forms.ToolStripMenuItem отчетыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокПродуктовToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem продуктыПоЗакускамToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокЗаказовToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem закускиПоПродуктамToolStripMenuItem;
     }
 }

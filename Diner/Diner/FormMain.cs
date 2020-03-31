@@ -127,7 +127,6 @@ namespace DinerView
         {
             LoadData();
         }
-
         private void списокПродуктовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
@@ -144,13 +143,12 @@ namespace DinerView
                 }
             }
         }
-        private void продуктыПоЗакускамToolStripMenuItem_Click(object sender, EventArgs e)
+        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportOrders>();
             form.ShowDialog();
         }
-
-        private void списокЗаказовToolStripMenuItem_Click(object sender, EventArgs e)
+        private void закускиПоПродуктамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportSnackFoods>();
             form.ShowDialog();

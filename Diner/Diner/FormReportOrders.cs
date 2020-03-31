@@ -55,26 +55,37 @@ namespace Diner
         }
         private void buttonMake_Click(object sender, EventArgs e)
         {
-            decimal Total = 0;
             try
             {
-                var dict = logic.GetOrders(new ReportBindingModel { DateFrom = dateTimePickerFrom.Value, DateTo = dateTimePickerTo.Value });
+                var dict = logic.GetOrders(new ReportBindingModel { DateFrom = dateTimePickerFrom.Value.Date, DateTo = dateTimePickerTo.Value.Date });
+                List<DateTime> dates = new List<DateTime>();
+                foreach (var order in dict)
+                {
+                    if (!dates.Contains(order.DateCreate.Date))
+                    {
+                        dates.Add(order.DateCreate.Date);
+                    }
+                }
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var elem in dict)
+                    foreach (var date in dates)
                     {
-                        dataGridView.Rows.Add(new object[] { elem.SnackName, elem.Sum });
-                        Total = Total + elem.Sum;
+                        decimal dateSum = 0;
+                        dataGridView.Rows.Add(new object[] { date.Date.ToShortDateString(), "", "" });
+                        foreach (var order in dict.Where(rec => rec.DateCreate.Date == date.Date))
+                        {
+                            dataGridView.Rows.Add(new object[] { "", order.SnackName, order.Sum });
+                            dateSum += order.Sum;
+                        }
+                        dataGridView.Rows.Add(new object[] { "Итого", "", dateSum });
+                        dataGridView.Rows.Add(new object[] { });
                     }
-                    dataGridView.Rows.Add(new object[] { });
-                    dataGridView.Rows.Add(new object[] { "Итого", Total });
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-               MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
