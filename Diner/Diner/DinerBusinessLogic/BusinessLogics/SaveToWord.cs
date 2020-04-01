@@ -31,23 +31,14 @@ namespace DinerBusinessLogic.BusinessLogics
                 {
                     docBody.AppendChild(CreateParagraph(new WordParagraph
                     {
-                        Texts = new List<string> { snack.SnackName },
+                        Texts = new List<string> { snack.SnackName, ":"+ snack.Price.ToString() },
                         TextProperties = new WordParagraphProperties
                         {
                             Size = "24",
                             JustificationValues = JustificationValues.Both,
                             Bold = true,
                         }
-                    }));
-                    docBody.AppendChild(CreateParagraph(new WordParagraph
-                    {
-                        Texts = new List<string> {"Цена: "+ snack.Price },
-                        TextProperties = new WordParagraphProperties
-                        {
-                            Size = "24",
-                            JustificationValues = JustificationValues.Both
-                        }
-                    }));
+                    }));               
                 }
                 docBody.AppendChild(CreateSectionProperties());
                 wordDocument.MainDocumentPart.Document.Save();
@@ -71,7 +62,7 @@ namespace DinerBusinessLogic.BusinessLogics
                     Run docRun = new Run();
                     RunProperties properties = new RunProperties();
                     properties.AppendChild(new FontSize { Val = paragraph.TextProperties.Size });
-                    if (paragraph.TextProperties.Bold)
+                    if (!run.StartsWith(":") && paragraph.TextProperties.Bold)
                     {
                         properties.AppendChild(new Bold());
                     }
