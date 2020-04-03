@@ -13,7 +13,7 @@ namespace DinerBusinessLogic.ViewModels
         public int Id { get; set; }
         [DataMember]
         [DisplayName("ФИО")]
-        public string FIO { get; set; }
+        public string ClientFIO { get; set; }
         [DataMember]
         [DisplayName("Логин")]
         public string Email { get; set; }

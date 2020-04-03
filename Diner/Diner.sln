@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinerDatabaseImplement", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinerBusinessLogic", "Diner\DinerBusinessLogic\DinerBusinessLogic.csproj", "{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinerRestApi", "DinerRestApi\DinerRestApi.csproj", "{0AA10242-8378-4EBB-BD7B-854B9D8ABA8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA10242-8378-4EBB-BD7B-854B9D8ABA8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA10242-8378-4EBB-BD7B-854B9D8ABA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA10242-8378-4EBB-BD7B-854B9D8ABA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA10242-8378-4EBB-BD7B-854B9D8ABA8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

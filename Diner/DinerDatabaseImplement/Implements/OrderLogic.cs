@@ -60,17 +60,22 @@ namespace DinerDatabaseImplement.Implements
             using (var context = new DinerDatabase())
             {
                 return context.Orders.Where(rec => model == null || (rec.Id == model.Id && model.Id.HasValue) 
-                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
                     SnackId = rec.SnackId,
+                    ClientId = rec.ClientId,
                     DateCreate = rec.DateCreate,
                     DateImplement = rec.DateImplement,
                     Status = rec.Status,
                     Count = rec.Count,
                     Sum = rec.Sum,
-                    SnackName = rec.Snack.SnackName
+                    ClientFIO = context.Clients.FirstOrDefault(recC => recC.Id ==
+                rec.ClientId).ClientFIO,
+                    SnackName = context.Snacks.FirstOrDefault(recS => recS.Id ==
+                   rec.SnackId).SnackName,
                 })
                 .ToList();
             }
