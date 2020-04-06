@@ -38,21 +38,24 @@ namespace DinerBusinessLogic
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            if (!storageLogic.CheckFoodsAvailability(order.SnackId, order.Count))
+            try
             {
-                throw new Exception("На складах не хватает продуктов");
+                storageLogic.RemoveFromStorage(order.SnackId, order.Count);
+                orderLogic.CreateOrUpdate(new OrderBindingModel
+                {
+                    Id = order.Id,
+                    SnackId = order.SnackId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
+                    Status = OrderStatus.Выполняется
+                });
             }
-            orderLogic.CreateOrUpdate(new OrderBindingModel
+            catch (Exception ex)
             {
-                Id = order.Id,
-                SnackId = order.SnackId,
-                Count = order.Count,
-                Sum = order.Sum,
-                DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
-                Status = OrderStatus.Выполняется
-            });
-            storageLogic.RemoveFromStorage(order.SnackId, order.Count);
+                throw ex;
+            }
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
