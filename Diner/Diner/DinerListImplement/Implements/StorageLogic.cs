@@ -166,8 +166,7 @@ namespace DinerListImplement.Implements
             foreach (var elem in SnackFoods)
             {
                 int count = 0;
-                var storageFoods = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId);
-                count = storageFoods.Sum(x => x.Count);
+                count = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId).Sum(x => x.Count);          
                 if (count < elem.Count * SnacksCount)
                     return false;
             }
