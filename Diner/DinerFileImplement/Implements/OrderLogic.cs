@@ -61,7 +61,8 @@ namespace DinerFileImplement.Implements
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
-                SnackName = GetSnackName(rec.SnackId),
+                SnackId = rec.SnackId,
+                SnackName = source.Snacks.FirstOrDefault(x => x.Id == rec.SnackId)?.SnackName,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
@@ -69,14 +70,6 @@ namespace DinerFileImplement.Implements
                 DateImplement = rec.DateImplement
             })
             .ToList();
-        }
-
-        private string GetSnackName(int id)
-        {
-            string name = "";
-            var Snack = source.Snacks.FirstOrDefault(x => x.Id == id);
-            name = Snack != null ? Snack.SnackName : "";
-            return name;
         }
     }
 }

@@ -69,7 +69,6 @@ namespace DinerFileImplement.Implements
         }
         public void Delete(SnackBindingModel model)
         {
-            // удаяем записи по компонентам при удалении изделия
             source.SnackFoods.RemoveAll(rec => rec.SnackId == model.Id);
             Snack element = source.Snacks.FirstOrDefault(rec => rec.Id == model.Id);
             if (element != null)

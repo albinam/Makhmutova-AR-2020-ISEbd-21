@@ -68,6 +68,7 @@ model.Id);
             {
                 Id = rec.Id,
                 SnackName = rec.Snack.SnackName,
+                SnackId = rec.Snack.Id,
                 Count = rec.Count,
                 Sum = rec.Sum,
                 Status = rec.Status,
