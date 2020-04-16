@@ -9,9 +9,7 @@ namespace DinerDatabaseImplement.Models
     public class Order
     {
         public int Id { get; set; }
-        public int ClientId { get; set; }
-        [Required]
-        public string ClientFIO { get; set; }
+        public int ClientId { get; set; } 
         public int SnackId { get; set; }
         [Required]
         public int Count { get; set; }

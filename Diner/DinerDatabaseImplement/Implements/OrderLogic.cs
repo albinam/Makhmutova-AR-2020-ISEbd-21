@@ -31,6 +31,7 @@ namespace DinerDatabaseImplement.Implements
                     context.Orders.Add(element);
                 }
                 element.SnackId = model.SnackId == 0 ? element.SnackId : model.SnackId;
+                element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;
