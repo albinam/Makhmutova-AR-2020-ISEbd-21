@@ -27,23 +27,19 @@ namespace DinerBusinessLogic.BusinessLogics
         /// <returns></returns>
         public List<ReportSnackFoodViewModel> GetSnackFood()
         {
-            var Foods = FoodLogic.Read(null);
             var Snacks = SnackLogic.Read(null);
             var list = new List<ReportSnackFoodViewModel>();
-            foreach (var food in Foods)
+            foreach (var snack in Snacks)
             {
-                foreach (var snack in Snacks)
+                foreach (var pc in snack.SnackFoods)
                 {
-                    if (snack.SnackFoods.ContainsKey(food.Id))
+                    var record = new ReportSnackFoodViewModel
                     {
-                        var record = new ReportSnackFoodViewModel
-                        {
-                            SnackName = snack.SnackName,
-                            FoodName = food.FoodName,
-                            Count = snack.SnackFoods[food.Id].Item2
-                        };
-                        list.Add(record);
-                    }
+                        SnackName = snack.SnackName,
+                        FoodName = pc.Value.Item1,
+                        Count = pc.Value.Item2
+                    };
+                    list.Add(record);
                 }
             }
             return list;
