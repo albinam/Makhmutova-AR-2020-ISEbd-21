@@ -34,6 +34,8 @@ namespace DinerDatabaseImplement.Implements
                     context.Clients.Add(element);
                 }
                 element.Email = model.Email;
+                element.ClientFIO = model.ClientFIO;
+                element.Password = model.Password;
                 context.SaveChanges();
             }
         }
