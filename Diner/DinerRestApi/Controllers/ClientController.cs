@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DinerRestApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ClientController : ControllerBase
     {
