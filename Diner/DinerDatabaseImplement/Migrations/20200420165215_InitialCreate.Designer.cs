@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DinerDatabaseImplement.Migrations
 {
     [DbContext(typeof(DinerDatabase))]
-    [Migration("20200403065829_InitialCreate")]
+    [Migration("20200420165215_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -67,10 +67,6 @@ namespace DinerDatabaseImplement.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClientFIO")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
@@ -148,8 +144,8 @@ namespace DinerDatabaseImplement.Migrations
 
             modelBuilder.Entity("DinerDatabaseImplement.Models.Order", b =>
                 {
-                    b.HasOne("DinerDatabaseImplement.Models.Client", null)
-                        .WithMany("Orders")
+                    b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
