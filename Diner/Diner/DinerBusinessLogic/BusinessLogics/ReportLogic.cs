@@ -31,35 +31,32 @@ namespace DinerBusinessLogic.BusinessLogics
             var list = new List<ReportSnackFoodViewModel>();
             foreach (var snack in Snacks)
             {
-                foreach (var pc in snack.SnackFoods)
+                foreach (var sf in snack.SnackFoods)
                 {
                     var record = new ReportSnackFoodViewModel
                     {
                         SnackName = snack.SnackName,
-                        FoodName = pc.Value.Item1,
-                        Count = pc.Value.Item2
+                        FoodName = sf.Value.Item1,
+                        Count = sf.Value.Item2
                     };
                     list.Add(record);
                 }
             }
             return list;
         }
-        public List<ReportOrdersViewModel> GetOrders(ReportBindingModel model)
+        public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
-            return orderLogic.Read(new OrderBindingModel
+            var list = orderLogic
+            .Read(new OrderBindingModel
             {
                 DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             })
-            .Select(x => new ReportOrdersViewModel
-            {
-                DateCreate = x.DateCreate,
-                SnackName = x.SnackName,
-                Count = x.Count,
-                Sum = x.Sum,
-                Status = x.Status
-            })
+            .GroupBy(rec => rec.DateCreate.Date)
+            .OrderBy(recG => recG.Key)
             .ToList();
+
+            return list;
         }
         /// <summary>
         /// Сохранение компонент в файл-Word
@@ -82,8 +79,6 @@ namespace DinerBusinessLogic.BusinessLogics
         {
             SaveToExcel.CreateDoc(new ExcelInfo
             {
-                DateFrom = model.DateFrom.Value,
-                DateTo = model.DateTo.Value,
                 FileName = model.FileName,
                 Title = "Список заказов",
                 Orders = GetOrders(model)
