@@ -39,7 +39,7 @@ namespace Diner
                         logic.SaveOrdersToExcelFile(new ReportBindingModel
                         {
                             FileName = dialog.FileName,
-                            DateFrom= dateTimePickerFrom.Value.Date,
+                            DateFrom = dateTimePickerFrom.Value.Date,
                             DateTo = dateTimePickerTo.Value.Date,
                         });
                         MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK,
@@ -55,30 +55,27 @@ namespace Diner
         }
         private void buttonMake_Click(object sender, EventArgs e)
         {
+            if (dateTimePickerFrom.Value.Date >= dateTimePickerTo.Value.Date)
+            {
+                MessageBox.Show("Дата начала должна быть меньше даты окончания", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             try
             {
                 var dict = logic.GetOrders(new ReportBindingModel { DateFrom = dateTimePickerFrom.Value.Date, DateTo = dateTimePickerTo.Value.Date });
-                List<DateTime> dates = new List<DateTime>();
-                foreach (var order in dict)
-                {
-                    if (!dates.Contains(order.DateCreate.Date))
-                    {
-                        dates.Add(order.DateCreate.Date);
-                    }
-                }
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var date in dates)
+                    foreach (var date in dict)
                     {
-                        decimal dateSum = 0;
-                        dataGridView.Rows.Add(new object[] { date.Date.ToShortDateString(), "", "" });
-                        foreach (var order in dict.Where(rec => rec.DateCreate.Date == date.Date))
+                        decimal sum = 0;
+                        dataGridView.Rows.Add(new object[] { date.Key.ToShortDateString(), "", "" });
+                        foreach (var order in date)
                         {
                             dataGridView.Rows.Add(new object[] { "", order.SnackName, order.Sum });
-                            dateSum += order.Sum;
+                            sum += order.Sum;
                         }
-                        dataGridView.Rows.Add(new object[] { "Итого", "", dateSum });
+                        dataGridView.Rows.Add(new object[] { "Итого", "", sum });
                         dataGridView.Rows.Add(new object[] { });
                     }
                 }

@@ -27,43 +27,36 @@ namespace DinerBusinessLogic.BusinessLogics
         /// <returns></returns>
         public List<ReportSnackFoodViewModel> GetSnackFood()
         {
-            var Foods = FoodLogic.Read(null);
             var Snacks = SnackLogic.Read(null);
             var list = new List<ReportSnackFoodViewModel>();
-            foreach (var food in Foods)
+            foreach (var snack in Snacks)
             {
-                foreach (var snack in Snacks)
+                foreach (var sf in snack.SnackFoods)
                 {
-                    if (snack.SnackFoods.ContainsKey(food.Id))
+                    var record = new ReportSnackFoodViewModel
                     {
-                        var record = new ReportSnackFoodViewModel
-                        {
-                            SnackName = snack.SnackName,
-                            FoodName = food.FoodName,
-                            Count = snack.SnackFoods[food.Id].Item2
-                        };
-                        list.Add(record);
-                    }
+                        SnackName = snack.SnackName,
+                        FoodName = sf.Value.Item1,
+                        Count = sf.Value.Item2
+                    };
+                    list.Add(record);
                 }
             }
             return list;
         }
-        public List<ReportOrdersViewModel> GetOrders(ReportBindingModel model)
+        public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
-            return orderLogic.Read(new OrderBindingModel
+            var list = orderLogic
+            .Read(new OrderBindingModel
             {
                 DateFrom = model.DateFrom,
                 DateTo = model.DateTo
             })
-            .Select(x => new ReportOrdersViewModel
-            {
-                DateCreate = x.DateCreate,
-                SnackName = x.SnackName,
-                Count = x.Count,
-                Sum = x.Sum,
-                Status = x.Status
-            })
+            .GroupBy(rec => rec.DateCreate.Date)
+            .OrderBy(recG => recG.Key)
             .ToList();
+
+            return list;
         }
         /// <summary>
         /// Сохранение компонент в файл-Word
@@ -86,8 +79,6 @@ namespace DinerBusinessLogic.BusinessLogics
         {
             SaveToExcel.CreateDoc(new ExcelInfo
             {
-                DateFrom = model.DateFrom.Value,
-                DateTo = model.DateTo.Value,
                 FileName = model.FileName,
                 Title = "Список заказов",
                 Orders = GetOrders(model)
