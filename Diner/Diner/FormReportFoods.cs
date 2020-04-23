@@ -14,22 +14,22 @@ using Unity;
 
 namespace Diner
 {
-    public partial class FormReportSnackFoods : Form
+    public partial class FormReportFoods : Form
     {
         [Dependency]
         public new IUnityContainer Container { get; set; }
         private readonly ReportLogic logic;
-        public FormReportSnackFoods(ReportLogic logic)
+        public FormReportFoods(ReportLogic logic)
         {
             InitializeComponent();
             this.logic = logic;
         }
         private void ButtonMake_Click(object sender, EventArgs e)
-        {           
+        {
             try
-            {             
-                var dataSource = logic.GetSnackFood();          
-                ReportDataSource source = new ReportDataSource("DataSetSnackFood", dataSource);
+            {
+                var dataSource = logic.GetStorageFoods();
+                ReportDataSource source = new ReportDataSource("DataSetFood", dataSource);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();
             }
@@ -61,7 +61,7 @@ namespace Diner
             }
         }
 
-        private void FormReportSnackFoods_Load(object sender, EventArgs e)
+        private void FormReportFoods_Load(object sender, EventArgs e)
         {
 
         }

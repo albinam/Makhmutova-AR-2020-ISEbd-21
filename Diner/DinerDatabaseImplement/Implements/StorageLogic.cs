@@ -170,7 +170,7 @@ namespace DinerDatabaseImplement.Implements
                         transaction.Commit();
                         return;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         transaction.Rollback();
                         throw;

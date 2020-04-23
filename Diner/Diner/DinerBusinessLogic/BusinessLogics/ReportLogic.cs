@@ -14,12 +14,14 @@ namespace DinerBusinessLogic.BusinessLogics
         private readonly IFoodLogic FoodLogic;
         private readonly ISnackLogic SnackLogic;
         private readonly IOrderLogic orderLogic;
+        private readonly IStorageLogic storageLogic;
         public ReportLogic(ISnackLogic SnackLogic, IFoodLogic FoodLogic,
-       IOrderLogic orderLogic)
+       IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.SnackLogic = SnackLogic;
             this.FoodLogic = FoodLogic;
             this.orderLogic = orderLogic;
+            this.storageLogic = storageLogic;
         }
         /// <summary>
         /// Получение списка компонент с указанием, в каких изделиях используются
@@ -38,6 +40,26 @@ namespace DinerBusinessLogic.BusinessLogics
                         SnackName = snack.SnackName,
                         FoodName = sf.Value.Item1,
                         Count = sf.Value.Item2
+                    };
+                    list.Add(record);
+                }
+            }
+            return list;
+        }
+        public List<ReportStorageFoodViewModel> GetStorageFoods()
+        {
+            var storages = storageLogic.GetList();
+            var list = new List<ReportStorageFoodViewModel>();
+
+            foreach (var storage in storages)
+            {
+                foreach (var sf in storage.StorageFoods)
+                {
+                    var record = new ReportStorageFoodViewModel
+                    {                       
+                        FoodName = sf.FoodName,
+                        StorageName = storage.StorageName,
+                        Count = sf.Count
                     };
                     list.Add(record);
                 }
@@ -95,6 +117,36 @@ namespace DinerBusinessLogic.BusinessLogics
                 FileName = model.FileName,
                 Title = "Список закусок по продуктам",
                 SnackFoods = GetSnackFood(),
+            });
+        }
+        public void SaveStoragesToWordFile(ReportBindingModel model)
+        {
+            SaveToWord.CreateDoc(new WordInfo
+            {
+                FileName = model.FileName,
+                Title = "Список складов",
+                Snacks = null,
+                Storages = storageLogic.GetList()
+            }) ;
+        }
+        public void SaveStorageFoodsToExcelFile(ReportBindingModel model)
+        {
+            SaveToExcel.CreateDoc(new ExcelInfo
+            {
+                FileName = model.FileName,
+                Title = "Список продуктов в складах",
+                Orders = null,
+                Storages = storageLogic.GetList()
+            });
+        }
+        public void SaveFoodsToPdfFile(ReportBindingModel model)
+        {
+            SaveToPdf.CreateDoc(new PdfInfo
+            {
+                FileName = model.FileName,
+                Title = "Продуктов",
+                SnackFoods = null,
+                StorageFoods = GetStorageFoods()
             });
         }
     }
