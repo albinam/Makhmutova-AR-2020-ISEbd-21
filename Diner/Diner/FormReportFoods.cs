@@ -64,6 +64,7 @@ namespace Diner
         private void FormReportFoods_Load(object sender, EventArgs e)
         {
 
+            this.reportViewer.RefreshReport();
         }
     }
 }

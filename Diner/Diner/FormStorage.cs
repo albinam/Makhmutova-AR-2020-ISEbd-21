@@ -1,5 +1,6 @@
 ﻿using DinerBusinessLogic.BindingModels;
 using DinerBusinessLogic.Interfaces;
+using DinerBusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,6 +21,7 @@ namespace Diner
         public int Id { set { id = value; } }
         private readonly IStorageLogic logic;
         private int? id;
+        private Dictionary<int, (string, int)> storageFoods;
         public FormStorage(IStorageLogic logic)
         {
             InitializeComponent();
@@ -31,27 +33,24 @@ namespace Diner
             {
                 try
                 {
-                    var view = logic.GetElement(id.Value);
+                    StorageViewModel view = logic.Read(new StorageBindingModel { Id = id })?[0];
                     if (view != null)
                     {
                         textBoxName.Text = view.StorageName;
-                    }
-                    var storageList = logic.GetList();
-                    var storageFoods = storageList[0].StorageFoods;
-                    for (int i = 0; i < storageList.Count; ++i)
-                    {
-                        if (storageList[i].Id == id)
-                        {
-                            storageFoods = storageList[i].StorageFoods;
-                        }
+                        storageFoods = view.StorageFoods;
                     }
                     if (storageFoods != null)
                     {
-                        dataGridView.DataSource = storageFoods;
+                        dataGridView.Rows.Clear();
+                        dataGridView.ColumnCount = 3;
                         dataGridView.Columns[0].Visible = false;
-                        dataGridView.Columns[1].Visible = false;
-                        dataGridView.Columns[2].Visible = false;
-                        dataGridView.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        dataGridView.Columns[1].HeaderText = "Продукт";
+                        dataGridView.Columns[2].HeaderText = "Количество";
+                        dataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        foreach (var sf in storageFoods)
+                        {
+                            dataGridView.Rows.Add(new object[] { sf.Key, sf.Value.Item1, sf.Value.Item2 });
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -73,19 +72,12 @@ namespace Diner
             {
                 if (id.HasValue)
                 {
-                    logic.UpdElement(new StorageBindingModel
+                    logic.CreateOrUpdate(new StorageBindingModel
                     {
-                        Id = id.Value,
+                        Id = id,
                         StorageName = textBoxName.Text
                     });
-                }
-                else
-                {
-                    logic.AddElement(new StorageBindingModel
-                    {
-                        StorageName = textBoxName.Text
-                    });
-                }
+                }           
                 MessageBox.Show("Сохранение прошло успешно", "Сообщение",
                MessageBoxButtons.OK, MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;

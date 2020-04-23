@@ -16,179 +16,56 @@ namespace DinerListImplement.Implements
         {
             source = DataListSingleton.GetInstance();
         }
-        public List<StorageViewModel> GetList()
+        public void CreateOrUpdate(StorageBindingModel model)
         {
-            List<StorageViewModel> result = new List<StorageViewModel>();
-            for (int i = 0; i < source.Storages.Count; ++i)
+            Storage tempStorage = model.Id.HasValue ? null : new Storage { Id = 1, StorageName = model.StorageName };
+
+            foreach (var Storage in source.Storages)
             {
-                List<StorageFoodViewModel> StorageFoods = new
-    List<StorageFoodViewModel>();
-                for (int j = 0; j < source.StorageFoods.Count; ++j)
-                {
-                    if (source.StorageFoods[j].StorageId == source.Storages[i].Id)
-                    {
-                        string FoodName = string.Empty;
-                        for (int k = 0; k < source.Foods.Count; ++k)
-                        {
-                            if (source.StorageFoods[j].FoodId ==
-                           source.Foods[k].Id)
-                            {
-                                FoodName = source.Foods[k].FoodName;
-                                break;
-                            }
-                        }
-                        StorageFoods.Add(new StorageFoodViewModel
-                        {
-                            Id = source.StorageFoods[j].Id,
-                            StorageId = source.StorageFoods[j].StorageId,
-                            FoodId = source.StorageFoods[j].FoodId,
-                            FoodName = FoodName,
-                            Count = source.StorageFoods[j].Count
-                        });
-                    }
-                }
-                result.Add(new StorageViewModel
-                {
-                    Id = source.Storages[i].Id,
-                    StorageName = source.Storages[i].StorageName,
-                    StorageFoods = StorageFoods
-                });
-            }
-            return result;
-        }
-        public StorageViewModel GetElement(int id)
-        {
-            for (int i = 0; i < source.Storages.Count; ++i)
-            {
-                List<StorageFoodViewModel> StorageFoods = new
-    List<StorageFoodViewModel>();
-                for (int j = 0; j < source.StorageFoods.Count; ++j)
-                {
-                    if (source.StorageFoods[j].StorageId == source.Storages[i].Id)
-                    {
-                        string FoodName = string.Empty;
-                        for (int k = 0; k < source.Foods.Count; ++k)
-                        {
-                            if (source.StorageFoods[j].FoodId ==
-                           source.Foods[k].Id)
-                            {
-                                FoodName = source.Foods[k].FoodName;
-                                break;
-                            }
-                        }
-                        StorageFoods.Add(new StorageFoodViewModel
-                        {
-                            Id = source.StorageFoods[j].Id,
-                            StorageId = source.StorageFoods[j].StorageId,
-                            FoodId = source.StorageFoods[j].FoodId,
-                            FoodName = FoodName,
-                            Count = source.StorageFoods[j].Count
-                        });
-                    }
-                }
-                if (source.Storages[i].Id == id)
-                {
-                    return new StorageViewModel
-                    {
-                        Id = source.Storages[i].Id,
-                        StorageName = source.Storages[i].StorageName,
-                        StorageFoods = StorageFoods
-                    };
-                }
-            }
-            throw new Exception("Элемент не найден");
-        }
-        public void AddElement(StorageBindingModel model)
-        {
-            int maxId = 0;
-            for (int i = 0; i < source.Storages.Count; ++i)
-            {
-                if (source.Storages[i].Id > maxId)
-                {
-                    maxId = source.Storages[i].Id;
-                }
-                if (source.Storages[i].StorageName == model.StorageName)
+                if (Storage.StorageName == model.StorageName && Storage.Id != model.Id)
                 {
                     throw new Exception("Уже есть склад с таким названием");
                 }
-            }
-            source.Storages.Add(new Storage
-            {
-                Id = maxId + 1,
-                StorageName = model.StorageName
-            });
-        }
-        public void UpdElement(StorageBindingModel model)
-        {
-            int index = -1;
-            for (int i = 0; i < source.Storages.Count; ++i)
-            {
-                if (source.Storages[i].Id == model.Id)
+                if (!model.Id.HasValue && Storage.Id >= tempStorage.Id)
                 {
-                    index = i;
+                    tempStorage.Id = Storage.Id + 1;
                 }
-                if (source.Storages[i].StorageName == model.StorageName &&
-                source.Storages[i].Id != model.Id)
+                else if (model.Id.HasValue && Storage.Id == model.Id)
                 {
-                    throw new Exception("Уже есть склад с таким названием");
+                    tempStorage = Storage;
                 }
             }
-            if (index == -1)
+            if (model.Id.HasValue)
             {
-                throw new Exception("Элемент не найден");
+                if (tempStorage == null)
+                {
+                    throw new Exception("Элемент не найден");
+                }
+                tempStorage.StorageName = model.StorageName;
             }
-            source.Storages[index].StorageName = model.StorageName;
+            else
+            {
+                source.Storages.Add(tempStorage);
+            }
         }
-        public void DelElement(int id)
+        public void Delete(StorageBindingModel model)
         {
             for (int i = 0; i < source.StorageFoods.Count; ++i)
             {
-                if (source.StorageFoods[i].StorageId == id)
+                if (source.StorageFoods[i].StorageId == model.Id)
                 {
                     source.StorageFoods.RemoveAt(i--);
                 }
             }
             for (int i = 0; i < source.Storages.Count; ++i)
             {
-                if (source.Storages[i].Id == id)
+                if (source.Storages[i].Id == model.Id)
                 {
                     source.Storages.RemoveAt(i);
                     return;
                 }
             }
             throw new Exception("Элемент не найден");
-        }
-        public bool CheckFoodsAvailability(int SnackId, int SnacksCount)
-        {
-            bool result = true;
-            var SnackFoods = source.SnackFoods.Where(x => x.SnackId == SnackId);
-            if (SnackFoods.Count() == 0) return false;
-            foreach (var elem in SnackFoods)
-            {
-                int count = 0;
-                count = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId).Sum(x => x.Count);          
-                if (count < elem.Count * SnacksCount)
-                    return false;
-            }
-            return result;
-        }
-        public void RemoveFromStorage(int SnackId, int SnacksCount)
-        {
-            var SnackFoods = source.SnackFoods.Where(x => x.SnackId == SnackId);
-            if (SnackFoods.Count() == 0) return;
-            foreach (var elem in SnackFoods)
-            {
-                int left = elem.Count * SnacksCount;
-                var storageFoods = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId);
-                foreach (var rec in storageFoods)
-                {
-                    int toRemove = left > rec.Count ? rec.Count : left;
-                    rec.Count -= toRemove;
-                    left -= toRemove;
-                    if (left == 0) break;
-                }
-            }
-            return;
         }
         public void FillStorage(StorageFoodBindingModel model)
         {
@@ -225,6 +102,70 @@ namespace DinerListImplement.Implements
                     Count = model.Count
                 });
             }
+        }
+        public List<StorageViewModel> Read(StorageBindingModel model)
+        {
+            List<StorageViewModel> result = new List<StorageViewModel>();
+
+            foreach (var Storage in source.Storages)
+            {
+                if (model != null)
+                {
+                    if (Storage.Id == model.Id)
+                    {
+                        result.Add(CreateViewModel(Storage));
+                        break;
+                    }
+
+                    continue;
+                }
+                result.Add(CreateViewModel(Storage));
+            }
+            return result;
+        }
+        public void RemoveFromStorage(int SnackId, int SnacksCount)
+        {
+            var SnackFoods = source.SnackFoods.Where(x => x.SnackId == SnackId);
+            if (SnackFoods.Count() == 0) return;
+            foreach (var elem in SnackFoods)
+            {
+                int left = elem.Count * SnacksCount;
+                var storageFoods = source.StorageFoods.FindAll(x => x.FoodId == elem.FoodId);
+                foreach (var rec in storageFoods)
+                {
+                    int toRemove = left > rec.Count ? rec.Count : left;
+                    rec.Count -= toRemove;
+                    left -= toRemove;
+                    if (left == 0) break;
+                }
+            }
+            return;
+        }
+        private StorageViewModel CreateViewModel(Storage Storage)
+        {
+            Dictionary<int, (string, int)> StorageFoods = new Dictionary<int, (string, int)>();
+            foreach (var sf in source.StorageFoods)
+            {
+                if (sf.StorageId == Storage.Id)
+                {
+                    string FoodName = string.Empty;
+                    foreach (var Food in source.Foods)
+                    {
+                        if (sf.FoodId == Food.Id)
+                        {
+                            FoodName = Food.FoodName;
+                            break;
+                        }
+                    }
+                    StorageFoods.Add(sf.FoodId, (FoodName, sf.Count));
+                }
+            }
+            return new StorageViewModel
+            {
+                Id = Storage.Id,
+                StorageName = Storage.StorageName,
+                StorageFoods = StorageFoods
+            };
         }
     }
 }

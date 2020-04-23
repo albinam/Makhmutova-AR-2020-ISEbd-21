@@ -12,90 +12,41 @@ namespace DinerDatabaseImplement.Implements
 {
     public class StorageLogic : IStorageLogic
     {
-        public List<StorageViewModel> GetList()
+        public void CreateOrUpdate(StorageBindingModel model)
         {
             using (var context = new DinerDatabase())
             {
-                return context.Storages
-                .ToList()
-               .Select(rec => new StorageViewModel
-               {
-                   Id = rec.Id,
-                   StorageName = rec.StorageName,
-                   StorageFoods = context.StorageFoods
-                .Include(recSF => recSF.Food)
-               .Where(recSF => recSF.StorageId == rec.Id).
-               Select(x => new StorageFoodViewModel
-               {
-                   Id = x.Id,
-                   StorageId = x.StorageId,
-                   FoodId = x.FoodId,
-                   FoodName = context.Foods.FirstOrDefault(y => y.Id == x.FoodId).FoodName,
-                   Count = x.Count
-               })
-               .ToList()
-               })
-            .ToList();
-            }
-        }
-        public StorageViewModel GetElement(int id)
-        {
-            using (var context = new DinerDatabase())
-            {
-                var elem = context.Storages.FirstOrDefault(x => x.Id == id);
-                if (elem == null)
+                Storage element = context.Storages.FirstOrDefault(rec => rec.StorageName == model.StorageName && rec.Id != model.Id);
+                if (element != null)
                 {
-                    throw new Exception("Элемент не найден");
+                    throw new Exception("Уже есть изделие с таким названием");
+                }
+                if (model.Id.HasValue)
+                {
+                    element = context.Storages.FirstOrDefault(rec => rec.Id == model.Id);
+                    if (element == null)
+                    {
+                        throw new Exception("Элемент не найден");
+                    }
                 }
                 else
                 {
-                    return new StorageViewModel
-                    {
-                        Id = id,
-                        StorageName = elem.StorageName,
-                        StorageFoods = context.StorageFoods
-                .Include(recSF => recSF.Food)
-               .Where(recSF => recSF.StorageId == elem.Id)
-                        .Select(x => new StorageFoodViewModel
-                        {
-                            Id = x.Id,
-                            StorageId = x.StorageId,
-                            FoodId = x.FoodId,
-                            FoodName = context.Foods.FirstOrDefault(y => y.Id == x.FoodId).FoodName,
-                            Count = x.Count
-                        }).ToList()
-                    };
+                    element = new Storage();
+                    context.Storages.Add(element);
                 }
-            }
-        }
-        public void AddElement(StorageBindingModel model)
-        {
-            using (var context = new DinerDatabase())
-            {
-                var elem = context.Storages.FirstOrDefault(x => x.StorageName == model.StorageName);
-                if (elem != null)
-                {
-                    throw new Exception("Уже есть склад с таким названием");
-                }
-                var storage = new Storage();
-                context.Storages.Add(storage);
-                storage.StorageName = model.StorageName;
+                element.StorageName = model.StorageName;
                 context.SaveChanges();
             }
         }
-        public void UpdElement(StorageBindingModel model)
+        public void Delete(StorageBindingModel model)
         {
             using (var context = new DinerDatabase())
             {
-                var elem = context.Storages.FirstOrDefault(x => x.StorageName == model.StorageName && x.Id != model.Id);
-                if (elem != null)
+                context.StorageFoods.RemoveRange(context.StorageFoods.Where(rec => rec.StorageId == model.Id));
+                Storage element = context.Storages.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element != null)
                 {
-                    throw new Exception("Уже есть склад с таким названием");
-                }
-                var elemToUpdate = context.Storages.FirstOrDefault(x => x.Id == model.Id);
-                if (elemToUpdate != null)
-                {
-                    elemToUpdate.StorageName = model.StorageName;
+                    context.Storages.Remove(element);
                     context.SaveChanges();
                 }
                 else
@@ -104,20 +55,23 @@ namespace DinerDatabaseImplement.Implements
                 }
             }
         }
-        public void DelElement(int id)
+        public List<StorageViewModel> Read(StorageBindingModel model)
         {
             using (var context = new DinerDatabase())
             {
-                var elem = context.Storages.FirstOrDefault(x => x.Id == id);
-                if (elem != null)
+                return context.Storages.Where(rec => model == null || rec.Id == model.Id)
+                .ToList()
+                .Select(rec => new StorageViewModel
                 {
-                    context.Storages.Remove(elem);
-                    context.SaveChanges();
-                }
-                else
-                {
-                    throw new Exception("Элемент не найден");
-                }
+                    Id = rec.Id,
+                    StorageName = rec.StorageName,
+                    StorageFoods = context.StorageFoods
+                                                .Include(recSF => recSF.Food)
+                                                .Where(recSF => recSF.StorageId == rec.Id)
+                                                .ToDictionary(recWC => recWC.StorageId, recWC => (
+                                                    recWC.Food?.FoodName, recWC.Count
+                                                ))
+                }).ToList();
             }
         }
         public void FillStorage(StorageFoodBindingModel model)
