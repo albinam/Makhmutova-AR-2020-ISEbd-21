@@ -1,5 +1,4 @@
-﻿using DinerBusinessLogic.BindingModels;
-using DinerBusinessLogic.Interfaces;
+﻿using DinerBusinessLogic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,13 +30,12 @@ namespace Diner
         {
             try
             {
-                var list = logic.Read(null);
+                var list = logic.GetList();
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                    dataGridView.Columns[2].Visible = false;
                 }
             }
             catch (Exception ex)
@@ -76,7 +74,7 @@ namespace Diner
                     int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        logic.Delete(new StorageBindingModel { Id = id }); ;
+                        logic.DelElement(id);
                     }
                     catch (Exception ex)
                     {

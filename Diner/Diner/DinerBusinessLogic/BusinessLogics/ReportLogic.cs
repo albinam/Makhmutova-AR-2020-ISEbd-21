@@ -48,7 +48,7 @@ namespace DinerBusinessLogic.BusinessLogics
         }
         public List<ReportStorageFoodViewModel> GetStorageFoods()
         {
-            var storages = storageLogic.Read(null);
+            var storages = storageLogic.GetList();
             var list = new List<ReportStorageFoodViewModel>();
 
             foreach (var storage in storages)
@@ -56,10 +56,10 @@ namespace DinerBusinessLogic.BusinessLogics
                 foreach (var sf in storage.StorageFoods)
                 {
                     var record = new ReportStorageFoodViewModel
-                    {
+                    {                       
+                        FoodName = sf.FoodName,
                         StorageName = storage.StorageName,
-                        FoodName = sf.Value.Item1,                       
-                        Count = sf.Value.Item2
+                        Count = sf.Count
                     };
                     list.Add(record);
                 }
@@ -126,7 +126,7 @@ namespace DinerBusinessLogic.BusinessLogics
                 FileName = model.FileName,
                 Title = "Список складов",
                 Snacks = null,
-                Storages = storageLogic.Read(null)
+                Storages = storageLogic.GetList()
             }) ;
         }
         public void SaveStorageFoodsToExcelFile(ReportBindingModel model)
@@ -136,7 +136,7 @@ namespace DinerBusinessLogic.BusinessLogics
                 FileName = model.FileName,
                 Title = "Список продуктов в складах",
                 Orders = null,
-                Storages = storageLogic.Read(null)
+                Storages = storageLogic.GetList()
             });
         }
         public void SaveFoodsToPdfFile(ReportBindingModel model)
@@ -144,7 +144,7 @@ namespace DinerBusinessLogic.BusinessLogics
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
-                Title = "Список продуктов",
+                Title = "Продуктов",
                 SnackFoods = null,
                 StorageFoods = GetStorageFoods()
             });

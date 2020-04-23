@@ -10,6 +10,6 @@ namespace DinerBusinessLogic.ViewModels
         public int Id { get; set; }
         [DisplayName("Название склада")]
         public string StorageName { get; set; }
-        public Dictionary<int, (string, int)> StorageFoods { get; set; }
+        public List<StorageFoodViewModel> StorageFoods { get; set; }
     }
 }

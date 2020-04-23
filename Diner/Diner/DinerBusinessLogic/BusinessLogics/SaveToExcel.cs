@@ -146,7 +146,7 @@ namespace DinerBusinessLogic.BusinessLogics
                                 ShareStringPart = shareStringPart,
                                 ColumnName = "B",
                                 RowIndex = rowIndex,
-                                Text = food.Value.Item1,
+                                Text = food.FoodName,
                                 StyleIndex = 1U
                             });
 
@@ -156,10 +156,10 @@ namespace DinerBusinessLogic.BusinessLogics
                                 ShareStringPart = shareStringPart,
                                 ColumnName = "C",
                                 RowIndex = rowIndex,
-                                Text = food.Value.Item2.ToString(),
+                                Text = food.Count.ToString(),
                                 StyleIndex = 1U
                             });
-                            foodsSum += food.Value.Item2;
+                            foodsSum += food.Count;
                             rowIndex++;
                         }
                         InsertCellInWorksheet(new ExcelCellParameters

@@ -32,7 +32,7 @@ namespace Diner
         {
             try
             {
-                var storageList = logicS.Read(null);
+                var storageList = logicS.GetList();
                 comboBoxStorage.DataSource = storageList;
                 comboBoxStorage.DisplayMember = "StorageName";
                 comboBoxStorage.ValueMember = "Id";

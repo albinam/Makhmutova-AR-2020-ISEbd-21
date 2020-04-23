@@ -30,12 +30,24 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.buttonToPdf = new System.Windows.Forms.Button();
             this.buttonMake = new System.Windows.Forms.Button();
-            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.ReportStorageFoodViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ReportStorageFoodViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // reportViewer
+            // 
+            reportDataSource1.Name = "DataSetFood";
+            reportDataSource1.Value = this.ReportStorageFoodViewModelBindingSource;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "Diner.ReportFood.rdlc";
+            this.reportViewer.Location = new System.Drawing.Point(12, 34);
+            this.reportViewer.Name = "reportViewer";
+            this.reportViewer.ServerReport.BearerToken = null;
+            this.reportViewer.Size = new System.Drawing.Size(656, 305);
+            this.reportViewer.TabIndex = 6;
             // 
             // buttonToPdf
             // 
@@ -56,18 +68,6 @@
             this.buttonMake.Text = "Сформировать";
             this.buttonMake.UseVisualStyleBackColor = true;
             this.buttonMake.Click += new System.EventHandler(this.ButtonMake_Click);
-            // 
-            // reportViewer
-            // 
-            reportDataSource1.Name = "DataSetFood";
-            reportDataSource1.Value = this.ReportStorageFoodViewModelBindingSource;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer.LocalReport.ReportEmbeddedResource = "Diner.ReportFood.rdlc";
-            this.reportViewer.Location = new System.Drawing.Point(15, 42);
-            this.reportViewer.Name = "reportViewer";
-            this.reportViewer.ServerReport.BearerToken = null;
-            this.reportViewer.Size = new System.Drawing.Size(639, 254);
-            this.reportViewer.TabIndex = 9;
             // 
             // ReportStorageFoodViewModelBindingSource
             // 
@@ -90,9 +90,10 @@
         }
 
         #endregion
+
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
         private System.Windows.Forms.Button buttonToPdf;
         private System.Windows.Forms.Button buttonMake;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
         private System.Windows.Forms.BindingSource ReportStorageFoodViewModelBindingSource;
     }
 }
