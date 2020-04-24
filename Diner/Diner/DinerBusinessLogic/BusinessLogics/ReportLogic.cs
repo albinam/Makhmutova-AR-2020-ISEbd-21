@@ -46,25 +46,27 @@ namespace DinerBusinessLogic.BusinessLogics
             }
             return list;
         }
-        public List<ReportStorageFoodViewModel> GetStorageFoods()
+        public List<ReportStorageFoodViewModel> GetStorageFood()
         {
+            var result = new List<ReportStorageFoodViewModel>();
             var storages = storageLogic.GetList();
-            var list = new List<ReportStorageFoodViewModel>();
-
             foreach (var storage in storages)
             {
-                foreach (var sf in storage.StorageFoods)
+                var storageFoods = storage.StorageFoods;
+                foreach (var sf in storageFoods)
                 {
-                    var record = new ReportStorageFoodViewModel
-                    {                       
-                        FoodName = sf.FoodName,
+                    result.Add(new ReportStorageFoodViewModel
+                    {
                         StorageName = storage.StorageName,
+                        FoodName = FoodLogic.Read(new FoodBindingModel
+                        {
+                            Id = sf.FoodId
+                        })[0].FoodName,
                         Count = sf.Count
-                    };
-                    list.Add(record);
+                    });
                 }
             }
-            return list;
+            return result.OrderBy(x => x.FoodName).ToList();
         }
         public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
@@ -127,7 +129,7 @@ namespace DinerBusinessLogic.BusinessLogics
                 Title = "Список складов",
                 Snacks = null,
                 Storages = storageLogic.GetList()
-            }) ;
+            });
         }
         public void SaveStorageFoodsToExcelFile(ReportBindingModel model)
         {
@@ -144,9 +146,9 @@ namespace DinerBusinessLogic.BusinessLogics
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
-                Title = "Продуктов",
+                Title = "Список продуктов",
                 SnackFoods = null,
-                StorageFoods = GetStorageFoods()
+                StorageFoods = GetStorageFood()
             });
         }
     }

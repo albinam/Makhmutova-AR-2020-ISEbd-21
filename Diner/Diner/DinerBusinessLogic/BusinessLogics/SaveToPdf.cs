@@ -26,7 +26,7 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 table.AddColumn(elem);
             }
-            if (info.SnackFoods != null)
+            /*if (info.SnackFoods != null)
             {
                 CreateRow(new PdfRowParameters
                 {
@@ -51,47 +51,46 @@ namespace DinerBusinessLogic.BusinessLogics
                     });
                 }
             }
-            else if (info.StorageFoods != null)
+            */
+            int sum = 0;
+
+            CreateRow(new PdfRowParameters
             {
-                int sum = 0;
+                Table = table,
+                Texts = new List<string> { "Продукт", "Склад", "Количество" },
+                Style = "NormalTitle",
+                ParagraphAlignment = ParagraphAlignment.Center
+            });
 
-                CreateRow(new PdfRowParameters
-                {
-                    Table = table,
-                    Texts = new List<string> { "Продукт", "Склад", "Количество" },
-                    Style = "NormalTitle",
-                    ParagraphAlignment = ParagraphAlignment.Center
-                });
-
-                foreach (var sf in info.StorageFoods)
-                {
-                    CreateRow(new PdfRowParameters
-                    {
-                        Table = table,
-                        Texts = new List<string>
-                    {
-                        sf.FoodName,
-                        sf.StorageName,
-                        sf.Count.ToString()
-                    },
-                        Style = "Normal",
-                        ParagraphAlignment = ParagraphAlignment.Left
-                    });
-                    sum += sf.Count;
-                }
+            foreach (var sf in info.StorageFoods)
+            {
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
                     Texts = new List<string>
                     {
-                        "Всего",
-                        "",
-                        sum.ToString()
+                        sf.FoodName,
+                        sf.StorageName,
+                        sf.Count.ToString()
                     },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left
                 });
+                sum += sf.Count;
             }
+            CreateRow(new PdfRowParameters
+            {
+                Table = table,
+                Texts = new List<string>
+                    {
+                        "Всего",
+                        "",
+                        sum.ToString()
+                    },
+                Style = "Normal",
+                ParagraphAlignment = ParagraphAlignment.Left
+            });
+
             PdfDocumentRenderer renderer = new PdfDocumentRenderer(true, PdfSharp.Pdf.PdfFontEmbedding.Always)
             {
                 Document = document
