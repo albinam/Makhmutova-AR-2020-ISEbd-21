@@ -12,12 +12,14 @@ namespace DinerListImplement
         public List<Order> Orders { get; set; }
         public List<Snack> Snacks { get; set; }
         public List<SnackFood> SnackFoods { get; set; }
+        public List<Client> Clients { get; set; }
         private DataListSingleton()
         {
             Foods = new List<Food>();
             Orders = new List<Order>();
             Snacks = new List<Snack>();
             SnackFoods = new List<SnackFood>();
+            Clients = new List<Client>();
         }
         public static DataListSingleton GetInstance()
         {
