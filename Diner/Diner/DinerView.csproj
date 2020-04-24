@@ -222,12 +222,6 @@
     <Compile Include="FormClients.Designer.cs">
       <DependentUpon>FormClients.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormEnter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormEnter.Designer.cs">
-      <DependentUpon>FormEnter.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormReportSnackFoods.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -287,9 +281,6 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
     <EmbeddedResource Include="FormClients.resx">
       <DependentUpon>FormClients.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormEnter.resx">
-      <DependentUpon>FormEnter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportSnackFoods.resx">
       <DependentUpon>FormReportSnackFoods.cs</DependentUpon>
