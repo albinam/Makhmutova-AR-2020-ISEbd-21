@@ -13,6 +13,7 @@ namespace DinerListImplement
         public List<Snack> Snacks { get; set; }
         public List<SnackFood> SnackFoods { get; set; }
         public List<Client> Clients { get; set; }
+        public List<Implementer> Implementers { get; set; }
         private DataListSingleton()
         {
             Foods = new List<Food>();
@@ -20,6 +21,7 @@ namespace DinerListImplement
             Snacks = new List<Snack>();
             SnackFoods = new List<SnackFood>();
             Clients = new List<Client>();
+            Implementers = new List<Implementer>();
         }
         public static DataListSingleton GetInstance()
         {
