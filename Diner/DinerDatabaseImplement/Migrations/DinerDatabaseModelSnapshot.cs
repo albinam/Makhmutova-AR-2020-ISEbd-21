@@ -59,6 +59,27 @@ namespace DinerDatabaseImplement.Migrations
                     b.ToTable("Foods");
                 });
 
+            modelBuilder.Entity("DinerDatabaseImplement.Models.Implementer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImplementerFIO")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PauseTime")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkingTime")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Implementers");
+                });
+
             modelBuilder.Entity("DinerDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -78,6 +99,9 @@ namespace DinerDatabaseImplement.Migrations
                     b.Property<DateTime?>("DateImplement")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ImplementerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("SnackId")
                         .HasColumnType("int");
 
@@ -90,6 +114,8 @@ namespace DinerDatabaseImplement.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
+
+                    b.HasIndex("ImplementerId");
 
                     b.HasIndex("SnackId");
 
@@ -147,6 +173,10 @@ namespace DinerDatabaseImplement.Migrations
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("DinerDatabaseImplement.Models.Implementer", "Implementer")
+                        .WithMany()
+                        .HasForeignKey("ImplementerId");
 
                     b.HasOne("DinerDatabaseImplement.Models.Snack", "Snack")
                         .WithMany("Orders")
