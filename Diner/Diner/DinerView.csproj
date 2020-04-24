@@ -359,6 +359,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.FoodViewModel.datasource" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.OrderViewModel.datasource" />
+    <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.ReportFoodsViewModel.datasource" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.ReportOrdersViewModel.datasource" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.ReportSnackFoodViewModel.datasource" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.ReportStorageFoodViewModel.datasource" />

@@ -33,14 +33,14 @@
             this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.buttonToPdf = new System.Windows.Forms.Button();
             this.buttonMake = new System.Windows.Forms.Button();
-            this.ReportStorageFoodViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.ReportStorageFoodViewModelBindingSource)).BeginInit();
+            this.ReportFoodsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.ReportFoodsViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // reportViewer
             // 
             reportDataSource1.Name = "DataSetFood";
-            reportDataSource1.Value = this.ReportStorageFoodViewModelBindingSource;
+            reportDataSource1.Value = this.ReportFoodsViewModelBindingSource;
             this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Diner.ReportFood.rdlc";
             this.reportViewer.Location = new System.Drawing.Point(12, 34);
@@ -69,9 +69,9 @@
             this.buttonMake.UseVisualStyleBackColor = true;
             this.buttonMake.Click += new System.EventHandler(this.ButtonMake_Click);
             // 
-            // ReportStorageFoodViewModelBindingSource
+            // ReportFoodsViewModelBindingSource
             // 
-            this.ReportStorageFoodViewModelBindingSource.DataSource = typeof(DinerBusinessLogic.ViewModels.ReportStorageFoodViewModel);
+            this.ReportFoodsViewModelBindingSource.DataSource = typeof(DinerBusinessLogic.ViewModels.ReportFoodsViewModel);
             // 
             // FormReportFoods
             // 
@@ -84,7 +84,7 @@
             this.Name = "FormReportFoods";
             this.Text = "Отчет по продуктам";
             this.Load += new System.EventHandler(this.FormReportFoods_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.ReportStorageFoodViewModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ReportFoodsViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -94,6 +94,6 @@
         private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
         private System.Windows.Forms.Button buttonToPdf;
         private System.Windows.Forms.Button buttonMake;
-        private System.Windows.Forms.BindingSource ReportStorageFoodViewModelBindingSource;
+        private System.Windows.Forms.BindingSource ReportFoodsViewModelBindingSource;
     }
 }

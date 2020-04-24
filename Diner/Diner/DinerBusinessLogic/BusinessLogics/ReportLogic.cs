@@ -48,14 +48,41 @@ namespace DinerBusinessLogic.BusinessLogics
         }
         public List<ReportStorageFoodViewModel> GetStorageFood()
         {
-            var result = new List<ReportStorageFoodViewModel>();
+            var Foods = FoodLogic.Read(null);
+            var storages = storageLogic.GetList();
+            var list = new List<ReportStorageFoodViewModel>();
+            foreach (var storage in storages)
+            {
+                var record = new ReportStorageFoodViewModel
+                {
+                    StorageName = storage.StorageName,
+                    Foods = new List<Tuple<string, int>>(),
+                    TotalCount = 0
+                };
+                foreach (var food in Foods)
+                {
+                    var storageFoods = storage.StorageFoods.Find(x => x.FoodId == food.Id);
+                    if (storageFoods != null)
+                    {
+                        record.Foods.Add(new Tuple<string, int>(food.FoodName,
+                       storageFoods.Count));
+                        record.TotalCount += storageFoods.Count;
+                    }
+                }
+                list.Add(record);
+            }
+            return list;
+        }
+        public List<ReportFoodsViewModel> GetFoods()
+        {
+            var result = new List<ReportFoodsViewModel>();
             var storages = storageLogic.GetList();
             foreach (var storage in storages)
             {
                 var storageFoods = storage.StorageFoods;
                 foreach (var sf in storageFoods)
                 {
-                    result.Add(new ReportStorageFoodViewModel
+                    result.Add(new ReportFoodsViewModel
                     {
                         StorageName = storage.StorageName,
                         FoodName = FoodLogic.Read(new FoodBindingModel
@@ -138,7 +165,7 @@ namespace DinerBusinessLogic.BusinessLogics
                 FileName = model.FileName,
                 Title = "Список продуктов в складах",
                 Orders = null,
-                Storages = storageLogic.GetList()
+                StorageFoods = GetStorageFood()
             });
         }
         public void SaveFoodsToPdfFile(ReportBindingModel model)
@@ -147,8 +174,7 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список продуктов",
-                SnackFoods = null,
-                StorageFoods = GetStorageFood()
+                Foods = GetFoods()
             });
         }
     }

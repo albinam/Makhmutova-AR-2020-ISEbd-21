@@ -29,20 +29,18 @@ namespace Diner
         {
             try
             {
-                var dict = storageLogic.GetList();
+                var dict = logic.GetStorageFood();
                 if (dict != null)
                 {
                     dataGridView.Rows.Clear();
-                    foreach (var Storage in dict)
+                    foreach (var elem in dict)
                     {
-                        int foodsSum = 0;
-                        dataGridView.Rows.Add(new object[] { Storage.StorageName, "", "" });
-                        foreach (var food in Storage.StorageFoods)
+                        dataGridView.Rows.Add(new object[] { elem.StorageName, "", "" });
+                        foreach (var listElem in elem.Foods)
                         {
-                            dataGridView.Rows.Add(new object[] { "", food.FoodName, food.Count });
-                            foodsSum += food.Count;
+                            dataGridView.Rows.Add(new object[] { "", listElem.Item1, listElem.Item2 });
                         }
-                        dataGridView.Rows.Add(new object[] { "Итого", "", foodsSum });
+                        dataGridView.Rows.Add(new object[] { "Итого", "", elem.TotalCount });
                         dataGridView.Rows.Add(new object[] { });
                     }
                 }

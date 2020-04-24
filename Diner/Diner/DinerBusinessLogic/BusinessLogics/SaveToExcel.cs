@@ -123,22 +123,21 @@ namespace DinerBusinessLogic.BusinessLogics
                     }
                     workbookpart.Workbook.Save();
                 }
-                else if (info.Storages != null)
+                else
                 {
-                    foreach (var Storage in info.Storages)
+                    foreach (var sf in info.StorageFoods)
                     {
-                        int foodsSum = 0;
                         InsertCellInWorksheet(new ExcelCellParameters
                         {
                             Worksheet = worksheetPart.Worksheet,
                             ShareStringPart = shareStringPart,
                             ColumnName = "A",
                             RowIndex = rowIndex,
-                            Text = Storage.StorageName,
+                            Text = sf.StorageName,
                             StyleIndex = 0U
                         });
                         rowIndex++;
-                        foreach (var food in Storage.StorageFoods)
+                        foreach (var food in sf.Foods)
                         {
                             InsertCellInWorksheet(new ExcelCellParameters
                             {
@@ -146,43 +145,32 @@ namespace DinerBusinessLogic.BusinessLogics
                                 ShareStringPart = shareStringPart,
                                 ColumnName = "B",
                                 RowIndex = rowIndex,
-                                Text = food.FoodName,
+                                Text = food.Item1,
                                 StyleIndex = 1U
                             });
-
                             InsertCellInWorksheet(new ExcelCellParameters
                             {
                                 Worksheet = worksheetPart.Worksheet,
                                 ShareStringPart = shareStringPart,
                                 ColumnName = "C",
                                 RowIndex = rowIndex,
-                                Text = food.Count.ToString(),
+                                Text = food.Item2.ToString(),
                                 StyleIndex = 1U
                             });
-                            foodsSum += food.Count;
                             rowIndex++;
                         }
                         InsertCellInWorksheet(new ExcelCellParameters
                         {
                             Worksheet = worksheetPart.Worksheet,
                             ShareStringPart = shareStringPart,
-                            ColumnName = "A",
-                            RowIndex = rowIndex,
-                            Text = "Итого",
-                            StyleIndex = 0U
-                        });
-                        InsertCellInWorksheet(new ExcelCellParameters
-                        {
-                            Worksheet = worksheetPart.Worksheet,
-                            ShareStringPart = shareStringPart,
                             ColumnName = "C",
                             RowIndex = rowIndex,
-                            Text = foodsSum.ToString(),
+                            Text = sf.TotalCount.ToString(),
                             StyleIndex = 0U
                         });
                         rowIndex++;
                     }
-                }
+                }           
                 workbookpart.Workbook.Save();
             }
         }

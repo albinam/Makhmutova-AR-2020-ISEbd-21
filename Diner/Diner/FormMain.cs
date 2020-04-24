@@ -152,12 +152,7 @@ namespace DinerView
         {
             var form = Container.Resolve<FormReportSnackFoods>();
             form.ShowDialog();
-        }
-        private void списокПродуктовToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            var form = Container.Resolve<FormReportFoods>();
-            form.ShowDialog();
-        }
+        }      
         private void продуктыПоСкладамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportStorageFoods>();
@@ -182,6 +177,11 @@ namespace DinerView
         private void складыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormStorages>();
+            form.ShowDialog();
+        }
+        private void списокПродуктовСоСкладамиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportFoods>();
             form.ShowDialog();
         }
     }
