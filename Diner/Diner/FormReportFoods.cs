@@ -29,7 +29,7 @@ namespace Diner
             try
             {
                 var dataSource = logic.GetStorageFoods();
-                ReportDataSource source = new ReportDataSource("DataSetFood", dataSource);
+                ReportDataSource source = new ReportDataSource("DataSetStorageFoods", dataSource);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();
             }
@@ -47,7 +47,7 @@ namespace Diner
                 {
                     try
                     {
-                        logic.SaveSnacksToPdfFile(new ReportBindingModel
+                        logic.SaveStorageFoodsToPdfFile(new ReportBindingModel
                         {
                             FileName = dialog.FileName,
                         });

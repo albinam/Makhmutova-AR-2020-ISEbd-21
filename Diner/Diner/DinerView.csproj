@@ -355,7 +355,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Report.rdlc" />
-    <EmbeddedResource Include="ReportFood.rdlc" />
+    <EmbeddedResource Include="ReportStorageFood.rdlc" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.FoodViewModel.datasource" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.OrderViewModel.datasource" />

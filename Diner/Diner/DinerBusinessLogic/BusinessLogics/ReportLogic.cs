@@ -60,7 +60,6 @@ namespace DinerBusinessLogic.BusinessLogics
                         FoodName = sf.FoodName,
                         Count = sf.Count
                     };
-
                     list.Add(record);
                 }
             }
@@ -125,7 +124,6 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список складов",
-                Snacks = null,
                 Storages = storageLogic.GetList()
             });
         }
@@ -135,17 +133,16 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список продуктов в складах",
-                Orders = null,
                 Storages = storageLogic.GetList()
             }) ;
         }
-        public void SaveFoodsToPdfFile(ReportBindingModel model)
+        public void SaveStorageFoodsToPdfFile(ReportBindingModel model)
         {
             SaveToPdf.CreateDoc(new PdfInfo
             {
                 FileName = model.FileName,
                 Title = "Список продуктов",
-                Foods = GetStorageFoods()
+                StorageFoods = GetStorageFoods()
             });
         }
     }

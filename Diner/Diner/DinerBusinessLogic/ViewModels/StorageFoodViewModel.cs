@@ -9,7 +9,9 @@ namespace DinerBusinessLogic.ViewModels
     {
         public int Id { get; set; }
         public int StorageId { get; set; }
-        public int FoodId { get; set; }
+        public int FoodId { get; set; } 
+        [DisplayName("Название склада")]
+        public string StorageName { get; set; }
         [DisplayName("Название продукта")]
         public string FoodName { get; set; }
         [DisplayName("Количество")]
