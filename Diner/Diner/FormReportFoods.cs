@@ -28,7 +28,7 @@ namespace Diner
         {
             try
             {
-                var dataSource = logic.GetFoods();
+                var dataSource = logic.GetStorageFoods();
                 ReportDataSource source = new ReportDataSource("DataSetFood", dataSource);
                 reportViewer.LocalReport.DataSources.Add(source);
                 reportViewer.RefreshReport();

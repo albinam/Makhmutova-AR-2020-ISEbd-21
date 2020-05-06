@@ -46,54 +46,25 @@ namespace DinerBusinessLogic.BusinessLogics
             }
             return list;
         }
-        public List<ReportStorageFoodViewModel> GetStorageFood()
+        public List<ReportStorageFoodViewModel> GetStorageFoods()
         {
-            var Foods = FoodLogic.Read(null);
-            var storages = storageLogic.GetList();
             var list = new List<ReportStorageFoodViewModel>();
-            foreach (var storage in storages)
-            {
-                var record = new ReportStorageFoodViewModel
-                {
-                    StorageName = storage.StorageName,
-                    Foods = new List<Tuple<string, int>>(),
-                    TotalCount = 0
-                };
-                foreach (var food in Foods)
-                {
-                    var storageFoods = storage.StorageFoods.Find(x => x.FoodId == food.Id);
-                    if (storageFoods != null)
-                    {
-                        record.Foods.Add(new Tuple<string, int>(food.FoodName,
-                       storageFoods.Count));
-                        record.TotalCount += storageFoods.Count;
-                    }
-                }
-                list.Add(record);
-            }
-            return list;
-        }
-        public List<ReportFoodsViewModel> GetFoods()
-        {
-            var result = new List<ReportFoodsViewModel>();
             var storages = storageLogic.GetList();
             foreach (var storage in storages)
             {
-                var storageFoods = storage.StorageFoods;
-                foreach (var sf in storageFoods)
+                foreach (var sf in storage.StorageFoods)
                 {
-                    result.Add(new ReportFoodsViewModel
+                    var record = new ReportStorageFoodViewModel
                     {
                         StorageName = storage.StorageName,
-                        FoodName = FoodLogic.Read(new FoodBindingModel
-                        {
-                            Id = sf.FoodId
-                        })[0].FoodName,
+                        FoodName = sf.FoodName,
                         Count = sf.Count
-                    });
+                    };
+
+                    list.Add(record);
                 }
             }
-            return result.OrderBy(x => x.FoodName).ToList();
+            return list;
         }
         public List<IGrouping<DateTime, OrderViewModel>> GetOrders(ReportBindingModel model)
         {
@@ -165,8 +136,8 @@ namespace DinerBusinessLogic.BusinessLogics
                 FileName = model.FileName,
                 Title = "Список продуктов в складах",
                 Orders = null,
-                StorageFoods = GetStorageFood()
-            });
+                Storages = storageLogic.GetList()
+            }) ;
         }
         public void SaveFoodsToPdfFile(ReportBindingModel model)
         {
@@ -174,7 +145,7 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 FileName = model.FileName,
                 Title = "Список продуктов",
-                Foods = GetFoods()
+                Foods = GetStorageFoods()
             });
         }
     }

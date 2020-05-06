@@ -69,10 +69,6 @@
             this.buttonMake.UseVisualStyleBackColor = true;
             this.buttonMake.Click += new System.EventHandler(this.ButtonMake_Click);
             // 
-            // ReportFoodsViewModelBindingSource
-            // 
-            this.ReportFoodsViewModelBindingSource.DataSource = typeof(DinerBusinessLogic.ViewModels.ReportFoodsViewModel);
-            // 
             // FormReportFoods
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
