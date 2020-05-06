@@ -54,7 +54,7 @@
             this.buttonMake.Click += new System.EventHandler(this.ButtonMake_Click);
             // 
             // reportViewer
-            //          
+            // 
             this.reportViewer.LocalReport.ReportEmbeddedResource = "Diner.ReportStorageFood.rdlc";
             this.reportViewer.Location = new System.Drawing.Point(12, 34);
             this.reportViewer.Name = "reportViewer";
@@ -71,7 +71,7 @@
             this.Controls.Add(this.buttonToPdf);
             this.Controls.Add(this.buttonMake);
             this.Name = "FormReportFoods";
-            this.Text = "Отчет по продуктам";
+            this.Text = "Отчет по продуктам со складами";
             this.Load += new System.EventHandler(this.FormReportFoods_Load);
             this.ResumeLayout(false);
 

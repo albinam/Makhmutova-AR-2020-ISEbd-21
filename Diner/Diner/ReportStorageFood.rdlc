@@ -28,7 +28,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Food Name</Value>
+                              <Value>Продукт</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -58,7 +58,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Storage Name</Value>
+                              <Value>Склад</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -88,7 +88,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Count</Value>
+                              <Value>Количество</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -202,7 +202,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -227,7 +226,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSetStorageFoods</DataSetName>
-        <Top>1.0287cm</Top>
+        <Top>1.63724cm</Top>
         <Left>1.95474cm</Left>
         <Height>2.68167cm</Height>
         <Width>13.47958cm</Width>
@@ -237,6 +236,38 @@
           </Border>
         </Style>
       </Tablix>
+      <Textbox Name="Textbox7">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Отчет по продуктам</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox7</rd:DefaultName>
+        <Top>0.47307cm</Top>
+        <Left>3.19828cm</Left>
+        <Height>0.68792cm</Height>
+        <Width>10.13354cm</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
     </ReportItems>
     <Height>2in</Height>
     <Style />
