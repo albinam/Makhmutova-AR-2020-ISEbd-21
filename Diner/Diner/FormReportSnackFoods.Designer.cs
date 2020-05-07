@@ -72,7 +72,6 @@
             this.Controls.Add(this.buttonMake);
             this.Name = "FormReportSnackFoods";
             this.Text = "Отчет по закускам с продуктами";
-            this.Load += new System.EventHandler(this.FormReportSnackFoods_Load);
             this.ResumeLayout(false);
 
         }

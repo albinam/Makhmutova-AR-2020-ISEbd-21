@@ -60,10 +60,5 @@ namespace Diner
                 }
             }
         }
-
-        private void FormReportFoods_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
