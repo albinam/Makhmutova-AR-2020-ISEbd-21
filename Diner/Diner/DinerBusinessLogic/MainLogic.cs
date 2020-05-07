@@ -10,16 +10,17 @@ namespace DinerBusinessLogic
     public class MainLogic
     {
         private readonly IOrderLogic orderLogic;
-        public MainLogic(IOrderLogic orderLogic)
+        private readonly IStorageLogic storageLogic;
+        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.orderLogic = orderLogic;
+            this.storageLogic = storageLogic;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 SnackId = model.SnackId,
-                ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -37,17 +38,24 @@ namespace DinerBusinessLogic
             {
                 throw new Exception("Заказ не в статусе \"Принят\"");
             }
-            orderLogic.CreateOrUpdate(new OrderBindingModel
+            try
             {
-                Id = order.Id,
-                ClientId = order.ClientId,
-                SnackId = order.SnackId,            
-                Count = order.Count,
-                Sum = order.Sum,
-                DateCreate = order.DateCreate,
-                DateImplement = DateTime.Now,
-                Status = OrderStatus.Выполняется
-            });
+                storageLogic.RemoveFromStorage(order.SnackId, order.Count);
+                orderLogic.CreateOrUpdate(new OrderBindingModel
+                {
+                    Id = order.Id,
+                    SnackId = order.SnackId,
+                    Count = order.Count,
+                    Sum = order.Sum,
+                    DateCreate = order.DateCreate,
+                    DateImplement = DateTime.Now,
+                    Status = OrderStatus.Выполняется
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public void FinishOrder(ChangeStatusBindingModel model)
         {
@@ -63,7 +71,6 @@ namespace DinerBusinessLogic
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
-                ClientId = order.ClientId,
                 SnackId = order.SnackId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -86,7 +93,6 @@ namespace DinerBusinessLogic
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
-                ClientId = order.ClientId,
                 SnackId = order.SnackId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -94,6 +100,10 @@ namespace DinerBusinessLogic
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
             });
+        }
+        public void FillStorage(StorageFoodBindingModel model)
+        {
+            storageLogic.FillStorage(model);
         }
     }
 }

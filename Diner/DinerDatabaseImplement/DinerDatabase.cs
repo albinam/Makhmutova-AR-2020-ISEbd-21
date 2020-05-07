@@ -10,7 +10,7 @@ namespace DinerDatabaseImplement
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-2RG8HAM\SQLEXPRESS;Initial Catalog=DinerDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
+                optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-2RG8HAM\SQLEXPRESS;Initial Catalog=DinerHomeworkDatabase;Integrated Security=True;MultipleActiveResultSets=True;");
             }
             base.OnConfiguring(optionsBuilder);
         }
@@ -18,6 +18,7 @@ namespace DinerDatabaseImplement
         public virtual DbSet<Snack> Snacks { set; get; }
         public virtual DbSet<SnackFood> SnackFoods { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
-        public virtual DbSet<Client> Clients { set; get; }
+        public virtual DbSet <Storage> Storages { set; get; }
+        public virtual DbSet<StorageFood> StorageFoods { set; get; }
     }
 }
