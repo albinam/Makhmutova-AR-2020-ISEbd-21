@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DinerBusinessLogic.BindingModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -25,7 +26,13 @@ namespace DinerClientView
             {
                 try
                 {
-                    //прописать запрос;
+                    APIClient.PostRequest("api/client/updatedata", new ClientBindingModel
+                    {
+                        Id = Program.Client.Id,
+                        ClientFIO = textBoxClientFIO.Text,
+                        Email = textBoxEmail.Text,
+                        Password = textBoxPassword.Text
+                    });
                     MessageBox.Show("Обновление прошло успешно", "Сообщение",
                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Program.Client.ClientFIO = textBoxClientFIO.Text;
