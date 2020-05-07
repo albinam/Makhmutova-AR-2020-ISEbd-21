@@ -39,6 +39,7 @@
             this.закускиПоПродуктамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.продуктыПоСкладамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.списокСкладовToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.списокПродуктовСоСкладамиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пополнитьСкладыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.buttonCreateOrder = new System.Windows.Forms.Button();
@@ -46,7 +47,7 @@
             this.buttonOrderReady = new System.Windows.Forms.Button();
             this.buttonPayOrder = new System.Windows.Forms.Button();
             this.buttonRef = new System.Windows.Forms.Button();
-            this.списокПродуктовСоСкладамиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.клиентыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -70,7 +71,8 @@
             this.Справочники.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.продуктыToolStripMenuItem,
             this.закускиToolStripMenuItem,
-            this.складыToolStripMenuItem});
+            this.складыToolStripMenuItem,
+            this.клиентыToolStripMenuItem});
             this.Справочники.Name = "Справочники";
             this.Справочники.Size = new System.Drawing.Size(94, 22);
             this.Справочники.Text = "Справочники";
@@ -78,21 +80,21 @@
             // продуктыToolStripMenuItem
             // 
             this.продуктыToolStripMenuItem.Name = "продуктыToolStripMenuItem";
-            this.продуктыToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.продуктыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.продуктыToolStripMenuItem.Text = "Продукты";
             this.продуктыToolStripMenuItem.Click += new System.EventHandler(this.продуктыToolStripMenuItem_Click);
             // 
             // закускиToolStripMenuItem
             // 
             this.закускиToolStripMenuItem.Name = "закускиToolStripMenuItem";
-            this.закускиToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.закускиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.закускиToolStripMenuItem.Text = "Закуски";
             this.закускиToolStripMenuItem.Click += new System.EventHandler(this.закускиToolStripMenuItem_Click);
             // 
             // складыToolStripMenuItem
             // 
             this.складыToolStripMenuItem.Name = "складыToolStripMenuItem";
-            this.складыToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.складыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.складыToolStripMenuItem.Text = "Склады";
             this.складыToolStripMenuItem.Click += new System.EventHandler(this.складыToolStripMenuItem_Click);
             // 
@@ -143,6 +145,13 @@
             this.списокСкладовToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
             this.списокСкладовToolStripMenuItem.Text = "Список складов";
             this.списокСкладовToolStripMenuItem.Click += new System.EventHandler(this.списокСкладовToolStripMenuItem_Click);
+            // 
+            // списокПродуктовСоСкладамиToolStripMenuItem
+            // 
+            this.списокПродуктовСоСкладамиToolStripMenuItem.Name = "списокПродуктовСоСкладамиToolStripMenuItem";
+            this.списокПродуктовСоСкладамиToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.списокПродуктовСоСкладамиToolStripMenuItem.Text = "Список продуктов со складами";
+            this.списокПродуктовСоСкладамиToolStripMenuItem.Click += new System.EventHandler(this.списокПродуктовСоСкладамиToolStripMenuItem_Click);
             // 
             // пополнитьСкладыToolStripMenuItem
             // 
@@ -219,12 +228,12 @@
             this.buttonRef.UseVisualStyleBackColor = true;
             this.buttonRef.Click += new System.EventHandler(this.ButtonRef_Click);
             // 
-            // списокПродуктовСоСкладамиToolStripMenuItem
+            // клиентыToolStripMenuItem
             // 
-            this.списокПродуктовСоСкладамиToolStripMenuItem.Name = "списокПродуктовСоСкладамиToolStripMenuItem";
-            this.списокПродуктовСоСкладамиToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.списокПродуктовСоСкладамиToolStripMenuItem.Text = "Список продуктов со складами";
-            this.списокПродуктовСоСкладамиToolStripMenuItem.Click += new System.EventHandler(this.списокПродуктовСоСкладамиToolStripMenuItem_Click);
+            this.клиентыToolStripMenuItem.Name = "клиентыToolStripMenuItem";
+            this.клиентыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.клиентыToolStripMenuItem.Text = "Клиенты";
+            this.клиентыToolStripMenuItem.Click += new System.EventHandler(this.клиентыToolStripMenuItem_Click);
             // 
             // FormMain
             // 
@@ -272,5 +281,6 @@
         private System.Windows.Forms.ToolStripMenuItem списокСкладовToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem пополнитьСкладыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem списокПродуктовСоСкладамиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem клиентыToolStripMenuItem;
     }
 }

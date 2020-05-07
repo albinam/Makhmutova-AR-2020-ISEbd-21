@@ -184,7 +184,7 @@ namespace DinerDatabaseImplement.Migrations
             modelBuilder.Entity("DinerDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

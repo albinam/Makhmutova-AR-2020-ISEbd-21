@@ -21,6 +21,6 @@ namespace DinerDatabaseImplement.Models
         public DateTime DateCreate { get; set; }
         public DateTime? DateImplement { get; set; }
         public virtual Snack Snack { get; set; }
-        public Client Client { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

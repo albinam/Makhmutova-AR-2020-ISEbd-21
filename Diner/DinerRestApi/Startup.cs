@@ -31,6 +31,8 @@ namespace DinerRestApi
             services.AddTransient<IClientLogic, ClientLogic>();
             services.AddTransient<IOrderLogic, OrderLogic>();
             services.AddTransient<ISnackLogic, SnackLogic>();
+            services.AddTransient<IStorageLogic, StorageLogic>();
+            services.AddTransient<IFoodLogic, FoodLogic>();
             services.AddTransient<MainLogic>();
             services.AddControllers();
         }

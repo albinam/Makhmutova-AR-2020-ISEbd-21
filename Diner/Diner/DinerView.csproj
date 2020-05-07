@@ -222,6 +222,18 @@
     <Compile Include="FormClients.Designer.cs">
       <DependentUpon>FormClients.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormFillStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormFillStorage.Designer.cs">
+      <DependentUpon>FormFillStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportFoods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportFoods.Designer.cs">
+      <DependentUpon>FormReportFoods.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportSnackFoods.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -258,6 +270,12 @@
     <Compile Include="FormReportOrders.Designer.cs">
       <DependentUpon>FormReportOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportStorageFoods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportStorageFoods.Designer.cs">
+      <DependentUpon>FormReportStorageFoods.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSnack.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -276,11 +294,29 @@
     <Compile Include="FormSnacks.Designer.cs">
       <DependentUpon>FormSnacks.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorage.Designer.cs">
+      <DependentUpon>FormStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStorages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorages.Designer.cs">
+      <DependentUpon>FormStorages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <EmbeddedResource Include="FormClients.resx">
       <DependentUpon>FormClients.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormFillStorage.resx">
+      <DependentUpon>FormFillStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportFoods.resx">
+      <DependentUpon>FormReportFoods.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportSnackFoods.resx">
       <DependentUpon>FormReportSnackFoods.cs</DependentUpon>
@@ -300,6 +336,9 @@
     <EmbeddedResource Include="FormReportOrders.resx">
       <DependentUpon>FormReportOrders.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportStorageFoods.resx">
+      <DependentUpon>FormReportStorageFoods.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSnack.resx">
       <DependentUpon>FormSnack.cs</DependentUpon>
     </EmbeddedResource>
@@ -308,6 +347,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSnacks.resx">
       <DependentUpon>FormSnacks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStorage.resx">
+      <DependentUpon>FormStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStorages.resx">
+      <DependentUpon>FormStorages.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -319,6 +364,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Report.rdlc" />
+    <EmbeddedResource Include="ReportStorageFood.rdlc" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.FoodViewModel.datasource" />
     <None Include="Properties\DataSources\DinerBusinessLogic.ViewModels.OrderViewModel.datasource" />
