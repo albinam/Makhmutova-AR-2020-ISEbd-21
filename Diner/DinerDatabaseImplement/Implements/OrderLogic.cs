@@ -31,6 +31,7 @@ namespace DinerDatabaseImplement.Implements
                     context.Orders.Add(element);
                 }
                 element.SnackId = model.SnackId == 0 ? element.SnackId : model.SnackId;
+                element.ClientId = model.ClientId == null ? element.ClientId : (int)model.ClientId;
                 element.Count = model.Count;
                 element.Sum = model.Sum;
                 element.Status = model.Status;
@@ -59,18 +60,23 @@ namespace DinerDatabaseImplement.Implements
         {
             using (var context = new DinerDatabase())
             {
-                return context.Orders.Where(rec => model == null || (rec.Id == model.Id && model.Id.HasValue) 
-                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo))
+                return context.Orders.Where(rec => model == null || (rec.Id == model.Id && model.Id.HasValue)
+                || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
+                (model.ClientId.HasValue && rec.ClientId == model.ClientId))
+                  .Include(rec => rec.Snack)
+                .Include(rec => rec.Client)
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
+                    ClientId = rec.ClientId,
                     SnackId = rec.SnackId,
-                    DateCreate = rec.DateCreate,
-                    DateImplement = rec.DateImplement,
-                    Status = rec.Status,
                     Count = rec.Count,
                     Sum = rec.Sum,
-                    SnackName = rec.Snack.SnackName
+                    Status = rec.Status,
+                    DateCreate = rec.DateCreate,
+                    DateImplement = rec.DateImplement,
+                    SnackName = rec.Snack.SnackName,
+                    ClientFIO = rec.Client.ClientFIO
                 })
                 .ToList();
             }

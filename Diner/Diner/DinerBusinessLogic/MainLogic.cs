@@ -19,6 +19,7 @@ namespace DinerBusinessLogic
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 SnackId = model.SnackId,
+                ClientId = model.ClientId,
                 Count = model.Count,
                 Sum = model.Sum,
                 DateCreate = DateTime.Now,
@@ -39,7 +40,8 @@ namespace DinerBusinessLogic
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
-                SnackId = order.SnackId,
+                ClientId = order.ClientId,
+                SnackId = order.SnackId,            
                 Count = order.Count,
                 Sum = order.Sum,
                 DateCreate = order.DateCreate,
@@ -61,6 +63,7 @@ namespace DinerBusinessLogic
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 SnackId = order.SnackId,
                 Count = order.Count,
                 Sum = order.Sum,
@@ -83,6 +86,7 @@ namespace DinerBusinessLogic
             orderLogic.CreateOrUpdate(new OrderBindingModel
             {
                 Id = order.Id,
+                ClientId = order.ClientId,
                 SnackId = order.SnackId,
                 Count = order.Count,
                 Sum = order.Sum,

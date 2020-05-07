@@ -18,5 +18,6 @@ namespace DinerDatabaseImplement
         public virtual DbSet<Snack> Snacks { set; get; }
         public virtual DbSet<SnackFood> SnackFoods { set; get; }
         public virtual DbSet<Order> Orders { set; get; }
+        public virtual DbSet<Client> Clients { set; get; }
     }
 }

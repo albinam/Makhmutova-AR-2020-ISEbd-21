@@ -6,12 +6,17 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20200306053804_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200306070444_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200403065829_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200403065829_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200420162556_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200420162556_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinerView", "Diner\DinerView.csproj", "{71F0ED81-78D0-482C-83DC-4FCAF7B39592}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinerDatabaseImplement", "DinerDatabaseImplement\DinerDatabaseImplement.csproj", "{122B95A9-59DF-44D8-80B9-D88B64AD5E59}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinerBusinessLogic", "Diner\DinerBusinessLogic\DinerBusinessLogic.csproj", "{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DinerRestApi", "DinerRestApi\DinerRestApi.csproj", "{440A7C85-9880-489E-899F-DF5A87A5C509}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DinerClientView", "DinerClientView\DinerClientView.csproj", "{6289B6CC-91C3-4081-8BE4-7DAA6BE274C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{761BFBFD-651C-4DC2-8CFF-41DE4CD51934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{440A7C85-9880-489E-899F-DF5A87A5C509}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{440A7C85-9880-489E-899F-DF5A87A5C509}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{440A7C85-9880-489E-899F-DF5A87A5C509}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{440A7C85-9880-489E-899F-DF5A87A5C509}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6289B6CC-91C3-4081-8BE4-7DAA6BE274C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6289B6CC-91C3-4081-8BE4-7DAA6BE274C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6289B6CC-91C3-4081-8BE4-7DAA6BE274C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6289B6CC-91C3-4081-8BE4-7DAA6BE274C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

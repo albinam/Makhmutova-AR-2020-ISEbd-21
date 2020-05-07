@@ -1,47 +1,30 @@
-﻿using DinerBusinessLogic;
-using DinerBusinessLogic.BindingModels;
-using DinerBusinessLogic.Interfaces;
-using DinerBusinessLogic.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using DinerBusinessLogic.BindingModels;
+using DinerBusinessLogic.ViewModels;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
 
-namespace DinerView
+namespace DinerClientView
 {
     public partial class FormCreateOrder : Form
     {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
-        private readonly ISnackLogic logicS;
-        private readonly IClientLogic logicC;
-        private readonly MainLogic logicM;
-        public FormCreateOrder(ISnackLogic logicS, IClientLogic logicC, MainLogic logicM)
+        public FormCreateOrder()
         {
             InitializeComponent();
-            this.logicS = logicS;
-            this.logicC = logicC;
-            this.logicM = logicM;
         }
         private void FormCreateOrder_Load(object sender, EventArgs e)
         {
             try
             {
-                var list = logicS.Read(null);
-                comboBoxSnack.DataSource = list;
                 comboBoxSnack.DisplayMember = "SnackName";
                 comboBoxSnack.ValueMember = "Id";
-                var listC = logicC.Read(null);
-                comboBoxClient.DisplayMember = "ClientFIO";
-                comboBoxClient.ValueMember = "Id";
-                comboBoxClient.DataSource = listC;
-                comboBoxClient.SelectedItem = null;
+                comboBoxSnack.DataSource =
+               APIClient.GetRequest<List<SnackViewModel>>("api/main/getSnacklist");
+                comboBoxSnack.SelectedItem = null;
             }
             catch (Exception ex)
             {
@@ -51,14 +34,16 @@ namespace DinerView
         }
         private void CalcSum()
         {
-            if (comboBoxSnack.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
+            if (comboBoxSnack.SelectedValue != null &&
+           !string.IsNullOrEmpty(textBoxCount.Text))
             {
                 try
                 {
                     int id = Convert.ToInt32(comboBoxSnack.SelectedValue);
-                    SnackViewModel Snack = logicS.Read(new SnackBindingModel { Id = id })?[0];
+                    SnackViewModel Snack =
+APIClient.GetRequest<SnackViewModel>($"api/main/getSnack?SnackId={id}");
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * Snack?.Price ?? 0).ToString();
+                    textBoxSum.Text = (count * Snack.Price).ToString();
                 }
                 catch (Exception ex)
                 {
@@ -85,34 +70,29 @@ namespace DinerView
             }
             if (comboBoxSnack.SelectedValue == null)
             {
-                MessageBox.Show("Выберите закуску", "Ошибка", MessageBoxButtons.OK,
+                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK,
                MessageBoxIcon.Error);
                 return;
             }
             try
             {
-                logicM.CreateOrder(new CreateOrderBindingModel
+                APIClient.PostRequest("api/main/createorder", new CreateOrderBindingModel
                 {
+                    ClientId = Program.Client.Id,
                     SnackId = Convert.ToInt32(comboBoxSnack.SelectedValue),
-                    ClientId = Convert.ToInt32(comboBoxClient.SelectedValue),
                     Count = Convert.ToInt32(textBoxCount.Text),
                     Sum = Convert.ToDecimal(textBoxSum.Text)
                 });
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение",
-              MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Заказ создан", "Сообщение", MessageBoxButtons.OK,
+               MessageBoxIcon.Information);
                 DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK,
-                MessageBoxIcon.Error);
+               MessageBoxIcon.Error);
             }
-        }
-        private void ButtonCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
         }
     }
 }
