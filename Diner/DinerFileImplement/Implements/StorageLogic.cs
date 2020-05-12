@@ -90,19 +90,19 @@ namespace DinerFileImplement.Implements
                 throw new Exception("Элемент не найден");
             }
         }
-        public void DelElement(int id)
+        public void DelElement(StorageBindingModel model)
         {
-            var elem = source.Storages.FirstOrDefault(x => x.Id == id);
-            if (elem != null)
+            source.StorageFoods.RemoveAll(rec => rec.StorageId == model.Id);
+            Storage element = source.Storages.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element != null)
             {
-                source.Storages.Remove(elem);
+                source.Storages.Remove(element);
             }
             else
             {
                 throw new Exception("Элемент не найден");
             }
         }
-
         public void FillStorage(StorageFoodBindingModel model)
         {
             var item = source.StorageFoods.FirstOrDefault(x => x.FoodId == model.FoodId

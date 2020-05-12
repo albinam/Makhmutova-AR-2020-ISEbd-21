@@ -81,7 +81,10 @@ namespace DinerStorageView
                     int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        APIStorage.PostRequest("api/storage/deletestorage", id);
+                        APIStorage.PostRequest("api/storage/deletestorage", new StorageBindingModel
+                        {
+                            Id = id,
+                        });
                     }
                     catch (Exception ex)
                     {

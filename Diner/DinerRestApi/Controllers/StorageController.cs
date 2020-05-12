@@ -41,7 +41,7 @@ namespace DinerRestApi.Controllers
             }
         }
         [HttpPost]
-        public void DeleteStorage(int StorageId) => _storage.DelElement(StorageId);
+        public void DeleteStorage(StorageBindingModel model) => _storage.DelElement(model);
         [HttpPost]
         public void FillStorage(StorageFoodBindingModel model) => _storage.FillStorage(model);
         private StorageModel Convert(StorageViewModel model)

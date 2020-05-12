@@ -12,7 +12,7 @@ namespace DinerBusinessLogic.Interfaces
         StorageViewModel GetElement(int id);
         void AddElement(StorageBindingModel model);
         void UpdElement(StorageBindingModel model);
-        void DelElement(int id);
+        void DelElement(StorageBindingModel model);
         void FillStorage(StorageFoodBindingModel model);
         void RemoveFromStorage(int snackId, int snacksCount);
     }
