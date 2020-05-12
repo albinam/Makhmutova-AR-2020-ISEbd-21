@@ -228,8 +228,8 @@
         <DataSetName>DataSetStorageFoods</DataSetName>
         <Top>1.63724cm</Top>
         <Left>1.95474cm</Left>
-        <Height>2.68167cm</Height>
-        <Width>13.47958cm</Width>
+        <Height>2.68166cm</Height>
+        <Width>13.47957cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -258,6 +258,85 @@
         <Height>0.68792cm</Height>
         <Width>10.13354cm</Width>
         <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox2">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Всего:</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value />
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox2</rd:DefaultName>
+        <Top>4.65349cm</Top>
+        <Left>11.08287cm</Left>
+        <Height>0.42651cm</Height>
+        <Width>1.16417cm</Width>
+        <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox4">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Sum(Fields!Count.Value, "DataSetStorageFoods")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox4</rd:DefaultName>
+        <Top>4.65349cm</Top>
+        <Left>12.72328cm</Left>
+        <Height>0.42651cm</Height>
+        <Width>2.06375cm</Width>
+        <ZIndex>3</ZIndex>
+        <ToolTip>=Sum(Fields!Count.Value, "DataSetStorageFoods")</ToolTip>
         <Style>
           <Border>
             <Style>None</Style>
