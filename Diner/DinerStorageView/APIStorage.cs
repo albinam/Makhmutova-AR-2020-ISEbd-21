@@ -11,19 +11,16 @@ namespace DinerStorageView
     public static class APIStorage
     {
         private static readonly HttpClient client = new HttpClient();
-
         public static void Connect()
         {
             client.BaseAddress = new Uri(ConfigurationManager.AppSettings["IPAddress"]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
-
         public static T GetRequest<T>(string requestUrl)
         {
             var response = client.GetAsync(requestUrl);
             var result = response.Result.Content.ReadAsStringAsync().Result;
-
             if (response.Result.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<T>(result);
