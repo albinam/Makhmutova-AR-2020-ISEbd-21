@@ -24,11 +24,10 @@ namespace DinerStorageView
                 dataGridView.DataSource = APIStorage.GetRequest<List<StorageViewModel>>($"api/storage/getstorageslist");
                 dataGridView.Columns[0].Visible = false;
                 dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-                dataGridView.Columns[2].Visible = false;
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void создатьСкладToolStripMenuItem_Click(object sender, EventArgs e)
