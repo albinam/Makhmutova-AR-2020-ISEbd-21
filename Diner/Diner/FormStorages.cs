@@ -1,4 +1,5 @@
-﻿using DinerBusinessLogic.Interfaces;
+﻿using DinerBusinessLogic.BindingModels;
+using DinerBusinessLogic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -74,7 +75,7 @@ namespace Diner
                     int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
                     try
                     {
-                        logic.DelElement(id);
+                        logic.DelElement(new StorageBindingModel { Id = id });
                     }
                     catch (Exception ex)
                     {

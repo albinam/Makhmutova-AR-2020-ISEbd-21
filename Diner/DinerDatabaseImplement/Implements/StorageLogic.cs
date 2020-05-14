@@ -108,30 +108,16 @@ namespace DinerDatabaseImplement.Implements
         {
             using (var context = new DinerDatabase())
             {
-                using (var transaction = context.Database.BeginTransaction())
+                context.StorageFoods.RemoveRange(context.StorageFoods.Where(rec => rec.StorageId == model.Id));
+                Storage element = context.Storages.FirstOrDefault(rec => rec.Id == model.Id);
+                if (element != null)
                 {
-                    try
-                    {
-                        context.StorageFoods.RemoveRange(context.StorageFoods.Where(rec => rec.StorageId == model.Id));
-                        Storage element = context.Storages.FirstOrDefault(rec => rec.Id == model.Id);
-
-                        if (element != null)
-                        {
-                            context.Storages.Remove(element);
-                            context.SaveChanges();
-                        }
-                        else
-                        {
-                            throw new Exception("Элемент не найден");
-                        }
-
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                        throw;
-                    }
+                    context.Storages.Remove(element);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("Элемент не найден");
                 }
             }
         }

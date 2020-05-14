@@ -139,18 +139,18 @@ namespace DinerListImplement.Implements
             }
             source.Storages[index].StorageName = model.StorageName;
         }
-        public void DelElement(int id)
+        public void DelElement(StorageBindingModel model)
         {
             for (int i = 0; i < source.StorageFoods.Count; ++i)
             {
-                if (source.StorageFoods[i].StorageId == id)
+                if (source.StorageFoods[i].StorageId == model.Id)
                 {
                     source.StorageFoods.RemoveAt(i--);
                 }
             }
             for (int i = 0; i < source.Storages.Count; ++i)
             {
-                if (source.Storages[i].Id == id)
+                if (source.Storages[i].Id == model.Id)
                 {
                     source.Storages.RemoveAt(i);
                     return;
