@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DinerDatabaseImplement.Migrations
 {
     [DbContext(typeof(DinerDatabase))]
-    [Migration("20200515072325_InitialCreate")]
+    [Migration("20200515074352_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -198,7 +198,7 @@ namespace DinerDatabaseImplement.Migrations
             modelBuilder.Entity("DinerDatabaseImplement.Models.MessageInfo", b =>
                 {
                     b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("MessageInfoes")
                         .HasForeignKey("ClientId");
                 });
 

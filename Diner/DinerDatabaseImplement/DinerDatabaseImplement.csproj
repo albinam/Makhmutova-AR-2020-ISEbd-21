@@ -21,6 +21,8 @@
     <Compile Remove="Migrations\20200515070443_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200515070718_InitialCreate.cs" />
     <Compile Remove="Migrations\20200515070718_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200515072325_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200515072325_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,10 +36,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Diner\DinerBusinessLogic\DinerBusinessLogic.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

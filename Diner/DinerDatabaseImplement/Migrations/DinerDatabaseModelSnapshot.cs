@@ -196,7 +196,7 @@ namespace DinerDatabaseImplement.Migrations
             modelBuilder.Entity("DinerDatabaseImplement.Models.MessageInfo", b =>
                 {
                     b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("MessageInfoes")
                         .HasForeignKey("ClientId");
                 });
 
