@@ -58,7 +58,7 @@ namespace DinerBusinessLogic.BusinessLogics
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
-                    Texts = new List<string> { "Заготовка", "Склад", "Количество" },
+                    Texts = new List<string> { "Продукт", "Склад", "Количество" },
                     Style = "NormalTitle",
                     ParagraphAlignment = ParagraphAlignment.Center
                 });
