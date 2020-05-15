@@ -4,6 +4,7 @@ using DinerBusinessLogic.ViewModels;
 using DinerDatabaseImplement.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DinerDatabaseImplement.Implements
