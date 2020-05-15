@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using System.Xml.Serialization;
+using System.Xml.Serialization;
+
 
 namespace DinerFileImplement
 {
@@ -16,16 +17,22 @@ namespace DinerFileImplement
         private readonly string OrderFileName = "Order.xml";
         private readonly string SnackFileName = "Snack.xml";
         private readonly string SnackFoodFileName = "SnackFood.xml";
+        private readonly string StorageFileName = "Storage.xml";
+        private readonly string StorageFoodFileName = "StorageFood.xml";
         public List<Food> Foods { get; set; }
         public List<Order> Orders { get; set; }
         public List<Snack> Snacks { get; set; }
         public List<SnackFood> SnackFoods { get; set; }
+        public List<Storage> Storages { set; get; }
+        public List<StorageFood> StorageFoods { set; get; }
         private FileDataListSingleton()
         {
             Foods = LoadFoods();
             Orders = LoadOrders();
             Snacks = LoadSnacks();
             SnackFoods = LoadSnackFoods();
+            Storages = LoadStorages();
+            StorageFoods = LoadStorageFoods();
         }
         public static FileDataListSingleton GetInstance()
         {
@@ -41,6 +48,8 @@ namespace DinerFileImplement
             SaveOrders();
             SaveSnacks();
             SaveSnackFoods();
+            SaveStorages();
+            SaveStorageFoods();
         }
         private List<Food> LoadFoods()
         {
@@ -126,6 +135,45 @@ namespace DinerFileImplement
             }
             return list;
         }
+        private List<Storage> LoadStorages()
+        {
+            var list = new List<Storage>();
+            if (File.Exists(StorageFileName))
+            {
+                XDocument xDocument = XDocument.Load(StorageFileName);
+                var xElements = xDocument.Root.Elements("Storage").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new Storage()
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        StorageName = elem.Element("StorageName").Value.ToString()
+                    });
+                }
+            }
+            return list;
+        }
+
+        private List<StorageFood> LoadStorageFoods()
+        {
+            var list = new List<StorageFood>();
+            if (File.Exists(StorageFoodFileName))
+            {
+                XDocument xDocument = XDocument.Load(StorageFoodFileName);
+                var xElements = xDocument.Root.Elements("StorageFood").ToList();
+                foreach (var elem in xElements)
+                {
+                    list.Add(new StorageFood()
+                    {
+                        Id = Convert.ToInt32(elem.Attribute("Id").Value),
+                        FoodId = Convert.ToInt32(elem.Element("FoodId").Value),
+                        StorageId = Convert.ToInt32(elem.Element("StorageId").Value),
+                        Count = Convert.ToInt32(elem.Element("Count").Value)
+                    });
+                }
+            }
+            return list;
+        }
         private void SaveFoods()
         {
             if (Foods != null)
@@ -192,6 +240,38 @@ namespace DinerFileImplement
                 }
                 XDocument xDocument = new XDocument(xElement);
                 xDocument.Save(SnackFoodFileName);
+            }
+        }
+        private void SaveStorages()
+        {
+            if (Storages != null)
+            {
+                var xElement = new XElement("Storages");
+                foreach (var elem in Storages)
+                {
+                    xElement.Add(new XElement("Storage",
+                        new XAttribute("Id", elem.Id),
+                        new XElement("StorageName", elem.StorageName)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(StorageFileName);
+            }
+        }
+        private void SaveStorageFoods()
+        {
+            if (StorageFoods != null)
+            {
+                var xElement = new XElement("StorageFoods");
+                foreach (var elem in StorageFoods)
+                {
+                    xElement.Add(new XElement("StorageFood",
+                        new XAttribute("Id", elem.Id),
+                        new XElement("FoodId", elem.FoodId),
+                        new XElement("StorageId", elem.StorageId),
+                        new XElement("Count", elem.Count)));
+                }
+                XDocument xDocument = new XDocument(xElement);
+                xDocument.Save(StorageFoodFileName);
             }
         }
     }

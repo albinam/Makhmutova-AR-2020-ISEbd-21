@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Tables;using MigraDoc.Rendering;
+using MigraDoc.DocumentObjectModel.Tables;
+using MigraDoc.Rendering;
 
 namespace DinerBusinessLogic.BusinessLogics
 {
@@ -26,23 +27,66 @@ namespace DinerBusinessLogic.BusinessLogics
             {
                 table.AddColumn(elem);
             }
-            CreateRow(new PdfRowParameters
+            if (info.SnackFoods != null)
             {
-                Table = table,
-                Texts = new List<string> { "Закуска", "Продукт", "Количество" },
-                Style = "NormalTitle",
-                ParagraphAlignment = ParagraphAlignment.Center
-            });
-            foreach (var sf in info.SnackFoods)
+                CreateRow(new PdfRowParameters
+                {
+                    Table = table,
+                    Texts = new List<string> { "Закуска", "Продукт", "Количество" },
+                    Style = "NormalTitle",
+                    ParagraphAlignment = ParagraphAlignment.Center
+                });
+                foreach (var sf in info.SnackFoods)
+                {
+                    CreateRow(new PdfRowParameters
+                    {
+                        Table = table,
+                        Texts = new List<string>
+                    {
+                        sf.SnackName,
+                        sf.FoodName,
+                        sf.Count.ToString()
+                    },
+                        Style = "Normal",
+                        ParagraphAlignment = ParagraphAlignment.Left
+                    });
+                }
+            }   
+            else if (info.StorageFoods != null)
             {
+                int sum = 0;
+                CreateRow(new PdfRowParameters
+                {
+                    Table = table,
+                    Texts = new List<string> { "Продукт", "Склад", "Количество" },
+                    Style = "NormalTitle",
+                    ParagraphAlignment = ParagraphAlignment.Center
+                });
+
+                foreach (var sf in info.StorageFoods)
+                {
+                    CreateRow(new PdfRowParameters
+                    {
+                        Table = table,
+                        Texts = new List<string>
+                    {
+                        sf.FoodName,
+                        sf.StorageName,
+                        sf.Count.ToString()
+                    },
+                        Style = "Normal",
+                        ParagraphAlignment = ParagraphAlignment.Left
+                    });
+                    sum += sf.Count;
+                }
                 CreateRow(new PdfRowParameters
                 {
                     Table = table,
                     Texts = new List<string>
                     {
-                        sf.SnackName,
-                        sf.FoodName,
-                        sf.Count.ToString()
+                        "Всего",
+                        "",
+                        sum.ToString()
                     },
                     Style = "Normal",
                     ParagraphAlignment = ParagraphAlignment.Left
