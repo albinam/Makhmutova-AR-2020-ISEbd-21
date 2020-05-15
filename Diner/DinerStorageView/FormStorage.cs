@@ -24,10 +24,28 @@ namespace DinerStorageView
             {
                 try
                 {
-                    StorageViewModel view = APIStorage.GetRequest<StorageViewModel>($"api/Storage/getstorage?storageId={id}");
+                    StorageViewModel view = APIStorage.GetRequest<StorageViewModel>($"api/storage/getstorage?storageId={id}");
                     if (view != null)
                     {
                         textBoxName.Text = view.StorageName;
+                    }
+                    var storageList = APIStorage.GetRequest<List<StorageViewModel>>($"api/storage/getstorageslist");
+                    var storageFoods = storageList[0].StorageFoods;
+                    for (int i = 0; i < storageList.Count; ++i)
+                    {
+                        if (storageList[i].Id == id)
+                        {
+                            storageFoods = storageList[i].StorageFoods;
+                        }
+                    }
+                    if (storageFoods != null)
+                    {
+                        dataGridView.DataSource = storageFoods;
+                       // dataGridView.Columns[0].Visible = false;
+                       // dataGridView.Columns[1].Visible = false;
+                      //  dataGridView.Columns[2].Visible = false;
+                      //  dataGridView.Columns[3].Visible = false;
+                       // dataGridView.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                     }
                 }
                 catch (Exception ex)
