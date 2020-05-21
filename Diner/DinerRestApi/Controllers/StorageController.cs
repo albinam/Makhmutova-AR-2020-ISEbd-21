@@ -51,7 +51,8 @@ namespace DinerRestApi.Controllers
             return new StorageModel
             {
                 Id = model.Id,
-                StorageName = model.StorageName
+                StorageName = model.StorageName,
+                StorageFoods=model.StorageFoods
             };
         }
     }
