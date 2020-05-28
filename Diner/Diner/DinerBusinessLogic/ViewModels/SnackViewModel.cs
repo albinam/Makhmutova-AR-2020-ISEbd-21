@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DinerBusinessLogic.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -7,17 +8,21 @@ using System.Text;
 namespace DinerBusinessLogic.ViewModels
 {
     [DataContract]
-    public class SnackViewModel
+    public class SnackViewModel : BaseViewModel
     {
+        [Column(title: "Название закуски", gridViewAutoSize: GridViewAutoSize.Fill)]
         [DataMember]
-        public int Id { get; set; }
-        [DataMember]
-        [DisplayName("Название закуски")]
         public string SnackName { get; set; }
+        [Column(title: "Цена", width: 50)]
         [DataMember]
-        [DisplayName("Цена")]
         public decimal Price { get; set; }
         [DataMember]
         public Dictionary<int, (string, int)> SnackFoods { get; set; }
+        public override List<string> Properties() => new List<string>
+        {
+            "Id",
+            "SnackName",
+            "Price"
+        };
     }
 }
