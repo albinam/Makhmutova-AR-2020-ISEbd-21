@@ -13,8 +13,16 @@
     <Compile Remove="Migrations\20200420162556_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200420165215_InitialCreate.cs" />
     <Compile Remove="Migrations\20200420165215_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200424070158_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200424070158_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20200424082058_6lab.cs" />
     <Compile Remove="Migrations\20200424082058_6lab.Designer.cs" />
+    <Compile Remove="Migrations\20200515070443_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200515070443_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200515070718_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200515070718_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20200515072325_InitialCreate.cs" />
+    <Compile Remove="Migrations\20200515072325_InitialCreate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

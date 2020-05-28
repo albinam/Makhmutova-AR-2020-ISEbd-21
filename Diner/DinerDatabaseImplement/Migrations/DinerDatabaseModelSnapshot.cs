@@ -80,6 +80,33 @@ namespace DinerDatabaseImplement.Migrations
                     b.ToTable("Implementers");
                 });
 
+            modelBuilder.Entity("DinerDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.Property<string>("MessageId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateDelivery")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("MessageId");
+
+                    b.HasIndex("ClientId");
+
+                    b.ToTable("MessageInfoes");
+                });
+
             modelBuilder.Entity("DinerDatabaseImplement.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -166,10 +193,17 @@ namespace DinerDatabaseImplement.Migrations
                     b.ToTable("SnackFoods");
                 });
 
+            modelBuilder.Entity("DinerDatabaseImplement.Models.MessageInfo", b =>
+                {
+                    b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
+                        .WithMany("MessageInfoes")
+                        .HasForeignKey("ClientId");
+                });
+
             modelBuilder.Entity("DinerDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
