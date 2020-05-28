@@ -31,6 +31,8 @@ namespace DinerRestApi.Controllers
             Email = login,
             Password = password
         })?[0];
+        [HttpGet]
+        public List<MessageInfoViewModel> GetMessages(int clientId) => _messageLogic.Read(new MessageInfoBindingModel { ClientId = clientId });
         [HttpPost]
         public void Register(ClientBindingModel model)
         {
