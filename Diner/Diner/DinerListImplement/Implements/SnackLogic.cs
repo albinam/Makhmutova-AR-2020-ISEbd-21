@@ -48,7 +48,6 @@ namespace DinerListImplement.Implements
         }
         public void Delete(SnackBindingModel model)
         {
-            // удаляем записи по компонентам при удалении изделия
             for (int i = 0; i < source.SnackFoods.Count; ++i)
             {
                 if (source.SnackFoods[i].SnackId == model.Id)
@@ -70,7 +69,6 @@ namespace DinerListImplement.Implements
         {
             snack.SnackName = model.SnackName;
             snack.Price = model.Price;
-            //обновляем существуюущие компоненты и ищем максимальный идентификатор
             int maxSFId = 0;
             for (int i = 0; i < source.SnackFoods.Count; ++i)
             {
@@ -80,14 +78,11 @@ namespace DinerListImplement.Implements
                 }
                 if (source.SnackFoods[i].SnackId == snack.Id)
                 {
-                    // если в модели пришла запись компонента с таким id
                     if
                     (model.SnackFoods.ContainsKey(source.SnackFoods[i].FoodId))
                     {
-                        // обновляем количество
                         source.SnackFoods[i].Count =
                         model.SnackFoods[source.SnackFoods[i].FoodId].Item2;
-                        // из модели убираем эту запись, чтобы остались только непросмотренные
                         model.SnackFoods.Remove(source.SnackFoods[i].FoodId);
                     }
                     else
@@ -96,7 +91,6 @@ namespace DinerListImplement.Implements
                     }
                 }
             }
-            // новые записи
             foreach (var sf in model.SnackFoods)
             {
                 source.SnackFoods.Add(new SnackFood
@@ -129,7 +123,6 @@ namespace DinerListImplement.Implements
         }
         private SnackViewModel CreateViewModel(Snack Snack)
         {
-            // требуется дополнительно получить список компонентов для изделия с названиями и их количество
             Dictionary<int, (string, int)> SnackFoods = new Dictionary<int, (string, int)>();
             foreach (var sf in source.SnackFoods)
             {

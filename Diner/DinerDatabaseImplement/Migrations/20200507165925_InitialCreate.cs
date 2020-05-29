@@ -50,6 +50,19 @@ namespace DinerDatabaseImplement.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Storages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StorageName = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Storages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -107,6 +120,33 @@ namespace DinerDatabaseImplement.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "StorageFoods",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StorageId = table.Column<int>(nullable: false),
+                    FoodId = table.Column<int>(nullable: false),
+                    Count = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StorageFoods", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StorageFoods_Foods_FoodId",
+                        column: x => x.FoodId,
+                        principalTable: "Foods",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_StorageFoods_Storages_StorageId",
+                        column: x => x.StorageId,
+                        principalTable: "Storages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_ClientId",
                 table: "Orders",
@@ -126,6 +166,16 @@ namespace DinerDatabaseImplement.Migrations
                 name: "IX_SnackFoods_SnackId",
                 table: "SnackFoods",
                 column: "SnackId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageFoods_FoodId",
+                table: "StorageFoods",
+                column: "FoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StorageFoods_StorageId",
+                table: "StorageFoods",
+                column: "StorageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -137,13 +187,19 @@ namespace DinerDatabaseImplement.Migrations
                 name: "SnackFoods");
 
             migrationBuilder.DropTable(
+                name: "StorageFoods");
+
+            migrationBuilder.DropTable(
                 name: "Clients");
+
+            migrationBuilder.DropTable(
+                name: "Snacks");
 
             migrationBuilder.DropTable(
                 name: "Foods");
 
             migrationBuilder.DropTable(
-                name: "Snacks");
+                name: "Storages");
         }
     }
 }
