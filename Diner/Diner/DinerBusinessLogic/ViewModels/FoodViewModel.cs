@@ -1,14 +1,19 @@
-﻿using System;
+﻿using DinerBusinessLogic.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
 namespace DinerBusinessLogic.ViewModels
 {
-    public class FoodViewModel
+    public class FoodViewModel : BaseViewModel
     {
-        public int Id { get; set; }
-        [DisplayName("Название продукта")]
+        [Column(title: "Продукт", gridViewAutoSize: GridViewAutoSize.Fill)]
         public string FoodName { get; set; }
+        public override List<string> Properties() => new List<string>
+        {
+            "Id",
+            "FoodName"
+        };
     }
 }
