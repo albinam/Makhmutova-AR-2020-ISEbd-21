@@ -24,7 +24,7 @@ namespace DinerView
         private readonly IOrderLogic orderLogic;
         private readonly WorkModeling work;
         private readonly ReportLogic report;
-        public FormMain(MainLogic logic, IOrderLogic orderLogic, WorkModeling work,ReportLogic report)
+        public FormMain(MainLogic logic, IOrderLogic orderLogic, WorkModeling work, ReportLogic report)
         {
             InitializeComponent();
             this.logic = logic;
@@ -73,17 +73,13 @@ namespace DinerView
             var form = Container.Resolve<FormImplementers>();
             form.ShowDialog();
         }
-        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            work.DoWork();
-            LoadData();
-        }
+
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
-        }      
+        }
         private void ButtonPayOrder_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
@@ -130,7 +126,7 @@ namespace DinerView
         {
             var form = Container.Resolve<FormReportSnackFoods>();
             form.ShowDialog();
-        }      
+        }
         private void продуктыПоСкладамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormReportStorageFoods>();
@@ -166,6 +162,11 @@ namespace DinerView
         {
             var form = Container.Resolve<FormClients>();
             form.ShowDialog();
+        }
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            work.DoWork();
+            LoadData();
         }
     }
 }

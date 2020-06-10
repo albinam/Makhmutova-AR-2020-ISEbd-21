@@ -67,7 +67,8 @@ namespace DinerDatabaseImplement.Implements
                     || model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo
                     || model.ClientId.HasValue && rec.ClientId == model.ClientId
                     || model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue
-                    || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется)               
+                    || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется
+                    || model.NotEnoughFoodsOrders.HasValue && model.NotEnoughFoodsOrders.Value && rec.Status == OrderStatus.Требуются_продукты)               
                 .Select(rec => new OrderViewModel
                 {
                     Id = rec.Id,
