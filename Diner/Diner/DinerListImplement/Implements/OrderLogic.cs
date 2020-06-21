@@ -65,10 +65,11 @@ namespace DinerListImplement.Implements
             {
                 if (model != null)
                 {
-                    if (order.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) 
-                        || model.ClientId.HasValue && order.ClientId == model.ClientId
-                        || model.FreeOrders.HasValue && model.FreeOrders.Value
-                    || model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется)
+                    if ((model.Id.HasValue && order.Id == model.Id)
+                        || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo)
+                        || (order.ClientId == model.ClientId)
+                        || (model.FreeOrders.HasValue && model.FreeOrders.Value && !order.ImplementerId.HasValue)
+                        || (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется))
                     {
                         result.Add(CreateViewModel(order));
                         break;
@@ -81,32 +82,90 @@ namespace DinerListImplement.Implements
         }
         private Order CreateModel(OrderBindingModel model, Order order)
         {
-            order.SnackId = model.SnackId == 0 ? order.SnackId : model.SnackId;
-            order.ClientId = (int)model.ClientId;
+            Snack Snack = null;
+            foreach (Snack s in source.Snacks)
+            {
+                if (s.Id == model.SnackId)
+                {
+                    Snack = s;
+                    break;
+                }
+            }
+            Client client = null;
+            foreach (Client c in source.Clients)
+            {
+                if (c.Id == model.ClientId)
+                {
+                    client = c;
+                    break;
+                }
+            }
+            Implementer implementer = null;
+            foreach (Implementer i in source.Implementers)
+            {
+                if (i.Id == model.ImplementerId)
+                {
+                    implementer = i;
+                    break;
+                }
+            }
+            if (Snack == null || client == null || model.ImplementerId.HasValue && implementer == null)
+            {
+                throw new Exception("Элемент не найден");
+            }
+            order.SnackId = model.SnackId;
+            order.ClientId = model.ClientId.Value;
+            order.ImplementerId = (int)model.ImplementerId;
             order.Count = model.Count;
-            order.ImplementerId = model.ImplementerId;
-            order.Sum = model.Sum;
+            order.Sum = model.Count * Snack.Price;
             order.Status = model.Status;
             order.DateCreate = model.DateCreate;
             order.DateImplement = model.DateImplement;
             return order;
         }
+
         private OrderViewModel CreateViewModel(Order order)
         {
-            string snackName = "";
-            for (int j = 0; j < source.Snacks.Count; ++j)
+            Snack Snack = null;
+            foreach (Snack s in source.Snacks)
             {
-                if (source.Snacks[j].Id == order.SnackId)
+                if (s.Id == order.SnackId)
                 {
-                    snackName = source.Snacks[j].SnackName;
+                    Snack = s;
                     break;
                 }
+            }
+            Client client = null;
+            foreach (Client c in source.Clients)
+            {
+                if (c.Id == order.ClientId)
+                {
+                    client = c;
+                    break;
+                }
+            }
+            Implementer implementer = null;
+            foreach (Implementer i in source.Implementers)
+            {
+                if (i.Id == order.ImplementerId)
+                {
+                    implementer = i;
+                    break;
+                }
+            }
+            if (Snack == null || client == null || order.ImplementerId.HasValue && implementer == null)
+            {
+                throw new Exception("Элемент не найден");
             }
             return new OrderViewModel
             {
                 Id = order.Id,
-                SnackName = snackName,
+                SnackId = order.SnackId,
+                SnackName = Snack.SnackName,
                 ClientId = order.ClientId,
+                ClientFIO = client.ClientFIO,
+                ImplementerId = order.ImplementerId,
+                ImplementerFIO = implementer.ImplementerFIO,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,

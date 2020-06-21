@@ -19,16 +19,13 @@ namespace DinerFileImplement.Implements
         public void CreateOrUpdate(ClientBindingModel model)
         {
             Client element = source.Clients.FirstOrDefault(rec => rec.Email == model.Email && rec.Id != model.Id);
-
             if (element != null)
             {
-                throw new Exception("Уже есть компонент с таким названием");
+                throw new Exception("Уже есть клиент с таким логином");
             }
-
             if (model.Id.HasValue)
             {
                 element = source.Clients.FirstOrDefault(rec => rec.Id == model.Id);
-
                 if (element == null)
                 {
                     throw new Exception("Элемент не найден");
@@ -47,7 +44,6 @@ namespace DinerFileImplement.Implements
         public void Delete(ClientBindingModel model)
         {
             Client element = source.Clients.FirstOrDefault(rec => rec.Id == model.Id);
-
             if (element != null)
             {
                 source.Clients.Remove(element);

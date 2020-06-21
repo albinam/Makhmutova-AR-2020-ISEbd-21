@@ -26,7 +26,7 @@ namespace DinerListImplement.Implements
                 if (food.FoodName == model.FoodName && food.Id !=
                model.Id)
                 {
-                    throw new Exception("Уже есть компонент с таким названием");
+                    throw new Exception("Уже есть продукт с таким названием");
                 }
                 if (!model.Id.HasValue && food.Id >= tempFood.Id)
                 {

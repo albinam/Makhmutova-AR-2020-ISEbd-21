@@ -24,7 +24,7 @@ namespace DinerDatabaseImplement.Implements
                        rec.SnackName == model.SnackName && rec.Id != model.Id);
                         if (element != null)
                         {
-                            throw new Exception("Уже есть изделие с таким названием");
+                            throw new Exception("Уже есть закуска с таким названием");
                         }
                         if (model.Id.HasValue)
                         {
