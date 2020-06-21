@@ -69,8 +69,7 @@ namespace DinerBusinessLogic
                 {
                     orderModel.Status = OrderStatus.Требуются_продукты;
                 }
-                orderLogic.CreateOrUpdate(orderModel);
-              
+                orderLogic.CreateOrUpdate(orderModel);             
             }
         }
         public void FinishOrder(ChangeStatusBindingModel model)

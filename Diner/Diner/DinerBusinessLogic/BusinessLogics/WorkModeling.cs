@@ -40,66 +40,80 @@ namespace DinerBusinessLogic.BusinessLogics
         /// <param name="orders"></param>
         private async void WorkerWorkAsync(ImplementerViewModel implementer, List<OrderViewModel> orders)
         {
-            // ищем заказы, которые уже в работе (вдруг исполнителя прервали)
             var runOrders = await Task.Run(() => orderLogic.Read(new OrderBindingModel
             {
                 ImplementerId = implementer.Id
             }));
             foreach (var order in runOrders)
             {
-                // делаем работу заново
                 Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
                 mainLogic.FinishOrder(new ChangeStatusBindingModel
                 {
                     OrderId = order.Id
                 });
-                // отдыхаем
                 Thread.Sleep(implementer.PauseTime);
             }
-            var notEnoughMaterialsOrders = orders
-                .Where(x => x.Status == OrderStatus.Требуются_продукты)
-                .Select(x => x)
-                .ToList();
-            orders.RemoveAll(x => notEnoughMaterialsOrders.Contains(x));
-            this.DoWork(implementer, notEnoughMaterialsOrders);
-
+            var notEnoughFoodsOrders = await Task.Run(() => orderLogic.Read(new OrderBindingModel { NotEnoughFoodsOrders = true }));
             await Task.Run(() =>
             {
-                this.DoWork(implementer, orders);
-            });
-        }
-        private void DoWork(ImplementerViewModel implementer, List<OrderViewModel> orders)
-        {
-            foreach (var order in orders)
-            {
-                // пытаемся назначить заказ на исполнителя
-                try
+                var toRemove = new List<OrderViewModel>();
+                foreach (var order in notEnoughFoodsOrders)
                 {
-                    mainLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                    try
                     {
-                        OrderId = order.Id,
-                        ImplementerId = implementer.Id
-                    });
-                    Boolean isNotEnoughMaterials = orderLogic.Read(new OrderBindingModel
-                    {
-                        Id = order.Id
-                    }).FirstOrDefault().Status == OrderStatus.Требуются_продукты;
-                    if (isNotEnoughMaterials)
-                    {
-                        continue;
+                        foreach (var _order in orders)
+                        {
+                            if (_order.Id == order.Id)
+                            {
+                                toRemove.Add(_order);
+                            }
+                        }
+                        mainLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                        {
+                            OrderId = order.Id,
+                            ImplementerId = implementer.Id
+                        });
+                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                        mainLogic.FinishOrder(new ChangeStatusBindingModel
+                        {
+                            OrderId = order.Id
+                        });
+                        Thread.Sleep(implementer.PauseTime);
                     }
-                    // делаем работу
-                    Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
-                    mainLogic.FinishOrder(new ChangeStatusBindingModel
+                    catch (Exception e)
                     {
-                        OrderId = order.Id,
-                        ImplementerId = implementer.Id
-                    });
-                    // отдыхаем
-                    Thread.Sleep(implementer.PauseTime);
+                        Console.WriteLine(e);
+                    }
                 }
-                catch (Exception) { }
-            }
+                foreach (var order in toRemove)
+                {
+                    orders.Remove(order);
+                }
+            });
+            await Task.Run(() =>
+            {
+                foreach (var order in orders)
+                {
+                    try
+                    {
+                        mainLogic.TakeOrderInWork(new ChangeStatusBindingModel
+                        {
+                            OrderId = order.Id,
+                            ImplementerId = implementer.Id
+                        });
+                        Thread.Sleep(implementer.WorkingTime * rnd.Next(1, 5) * order.Count);
+                        mainLogic.FinishOrder(new ChangeStatusBindingModel
+                        {
+                            OrderId = order.Id
+                        });
+                        Thread.Sleep(implementer.PauseTime);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+            });
         }
     }
 }
