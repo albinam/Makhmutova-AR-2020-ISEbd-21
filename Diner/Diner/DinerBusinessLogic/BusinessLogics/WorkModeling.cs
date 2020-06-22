@@ -110,7 +110,7 @@ namespace DinerBusinessLogic.BusinessLogics
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine(e);
+                       
                     }
                 }
             });
