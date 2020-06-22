@@ -26,7 +26,7 @@ namespace DinerBusinessLogic.ViewModels
         public string Body { get; set; }
         public override List<string> Properties() => new List<string>
         {
-            "MessageId",
+            "Id",
             "SenderName",
             "DateDelivery",
             "Subject",
