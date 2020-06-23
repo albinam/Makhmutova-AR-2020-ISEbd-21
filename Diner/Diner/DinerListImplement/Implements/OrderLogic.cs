@@ -65,11 +65,12 @@ namespace DinerListImplement.Implements
             {
                 if (model != null)
                 {
-                    if (order.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) 
-                        || model.ClientId.HasValue && order.ClientId == model.ClientId
-                        || model.FreeOrders.HasValue && model.FreeOrders.Value
-                    || model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется
-                      || model.NotEnoughFoodsOrders.HasValue && model.NotEnoughFoodsOrders.Value && order.Status == OrderStatus.Требуются_продукты)
+                    if (order.Id == model.Id 
+                        || (model.DateFrom.HasValue && model.DateTo.HasValue && order.DateCreate >= model.DateFrom && order.DateCreate <= model.DateTo) 
+                        || (model.ClientId.HasValue && order.ClientId == model.ClientId)
+                        || (model.FreeOrders.HasValue && model.FreeOrders.Value && !order.ImplementerId.HasValue)
+                        || (model.ImplementerId.HasValue && order.ImplementerId == model.ImplementerId && order.Status == OrderStatus.Выполняется)
+                        || (model.NotEnoughFoodsOrders.HasValue && model.NotEnoughFoodsOrders.Value && order.Status == OrderStatus.Требуются_продукты))
                     {
                         result.Add(CreateViewModel(order));
                         break;
@@ -108,6 +109,7 @@ namespace DinerListImplement.Implements
                 Id = order.Id,
                 SnackName = snackName,
                 ClientId = order.ClientId,
+                ImplementerId=order.ImplementerId,
                 Count = order.Count,
                 Sum = order.Sum,
                 Status = order.Status,
