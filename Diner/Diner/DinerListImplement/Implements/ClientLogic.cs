@@ -18,16 +18,19 @@ namespace DinerListImplement.Implements
         public void CreateOrUpdate(ClientBindingModel model)
         {
             Client tempClient = model.Id.HasValue ? null : new Client { Id = 1 };
-
             foreach (var client in source.Clients)
             {
                 if (!model.Id.HasValue && client.Id >= tempClient.Id)
                 {
-                    tempClient.Id = tempClient.Id + 1;
+                    tempClient.Id = client.Id + 1;
                 }
                 else if (model.Id.HasValue && client.Id == model.Id)
                 {
                     tempClient = client;
+                }
+                if (!model.Id.HasValue && model.Email == client.Email)
+                {
+                    throw new Exception("Данный логин уже занят");
                 }
             }
             if (model.Id.HasValue)
