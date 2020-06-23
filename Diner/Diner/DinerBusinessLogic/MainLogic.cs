@@ -68,6 +68,7 @@ namespace DinerBusinessLogic
                 catch
                 {
                     orderModel.Status = OrderStatus.Требуются_продукты;
+                    throw;
                 }
                 orderLogic.CreateOrUpdate(orderModel);             
             }
