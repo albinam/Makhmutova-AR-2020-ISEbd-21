@@ -10,10 +10,12 @@ namespace DinerBusinessLogic
     public class MainLogic
     {
         private readonly IOrderLogic orderLogic;
+        private readonly IStorageLogic storageLogic;
         private readonly object locker = new object();
-        public MainLogic(IOrderLogic orderLogic)
+        public MainLogic(IOrderLogic orderLogic, IStorageLogic storageLogic)
         {
             this.orderLogic = orderLogic;
+            this.storageLogic = storageLogic;
         }
         public void CreateOrder(CreateOrderBindingModel model)
         {
@@ -39,26 +41,36 @@ namespace DinerBusinessLogic
                 {
                     throw new Exception("Не найден заказ");
                 }
-                if (order.Status != OrderStatus.Принят)
+                if (order.Status != OrderStatus.Принят && order.Status != OrderStatus.Требуются_продукты)
                 {
-                    throw new Exception("Заказ не в статусе \"Принят\"");
+                    throw new Exception("Заказ не в статусе \"Принят\"или \"Требуются продукты\"");
                 }
                 if (order.ImplementerId.HasValue)
                 {
                     throw new Exception("У заказа уже есть исполнитель");
                 }
-                orderLogic.CreateOrUpdate(new OrderBindingModel
+                var orderModel = new OrderBindingModel
                 {
                     Id = order.Id,
-                    ClientId = order.ClientId,
-                    ImplementerId = model.ImplementerId,
                     SnackId = order.SnackId,
                     Count = order.Count,
                     Sum = order.Sum,
-                    DateCreate = order.DateCreate,
-                    DateImplement = DateTime.Now,
-                    Status = OrderStatus.Выполняется
-                });
+                    ClientId = order.ClientId,
+                    DateCreate = order.DateCreate
+                };
+                try
+                {
+                    storageLogic.RemoveFromStorage(order.SnackId,order.Count);
+                    orderModel.DateImplement = DateTime.Now;
+                    orderModel.Status = OrderStatus.Выполняется;
+                    orderModel.ImplementerId = model.ImplementerId;
+                }
+                catch
+                {
+                    orderModel.Status = OrderStatus.Требуются_продукты;
+                    throw;
+                }
+                orderLogic.CreateOrUpdate(orderModel);             
             }
         }
         public void FinishOrder(ChangeStatusBindingModel model)
@@ -108,6 +120,10 @@ namespace DinerBusinessLogic
                 DateImplement = order.DateImplement,
                 Status = OrderStatus.Оплачен
             });
+        }
+        public void FillStorage(StorageFoodBindingModel model)
+        {
+            storageLogic.FillStorage(model);
         }
     }
 }

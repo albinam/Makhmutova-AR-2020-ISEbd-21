@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DinerDatabaseImplement.Migrations
 {
     [DbContext(typeof(DinerDatabase))]
-    [Migration("20200424070158_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200610084534_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -168,16 +168,57 @@ namespace DinerDatabaseImplement.Migrations
                     b.ToTable("SnackFoods");
                 });
 
+            modelBuilder.Entity("DinerDatabaseImplement.Models.Storage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StorageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Storages");
+                });
+
+            modelBuilder.Entity("DinerDatabaseImplement.Models.StorageFood", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FoodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StorageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FoodId");
+
+                    b.HasIndex("StorageId");
+
+                    b.ToTable("StorageFoods");
+                });
+
             modelBuilder.Entity("DinerDatabaseImplement.Models.Order", b =>
                 {
                     b.HasOne("DinerDatabaseImplement.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("DinerDatabaseImplement.Models.Implementer", "Implementer")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ImplementerId");
 
                     b.HasOne("DinerDatabaseImplement.Models.Snack", "Snack")
@@ -198,6 +239,21 @@ namespace DinerDatabaseImplement.Migrations
                     b.HasOne("DinerDatabaseImplement.Models.Snack", "Snack")
                         .WithMany("SnackFoods")
                         .HasForeignKey("SnackId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DinerDatabaseImplement.Models.StorageFood", b =>
+                {
+                    b.HasOne("DinerDatabaseImplement.Models.Food", "Food")
+                        .WithMany()
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DinerDatabaseImplement.Models.Storage", "Storage")
+                        .WithMany("StorageFoods")
+                        .HasForeignKey("StorageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

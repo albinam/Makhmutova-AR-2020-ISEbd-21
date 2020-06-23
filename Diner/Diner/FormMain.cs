@@ -24,7 +24,7 @@ namespace DinerView
         private readonly IOrderLogic orderLogic;
         private readonly WorkModeling work;
         private readonly ReportLogic report;
-        public FormMain(MainLogic logic, IOrderLogic orderLogic, WorkModeling work,ReportLogic report)
+        public FormMain(MainLogic logic, IOrderLogic orderLogic, WorkModeling work, ReportLogic report)
         {
             InitializeComponent();
             this.logic = logic;
@@ -73,17 +73,13 @@ namespace DinerView
             var form = Container.Resolve<FormImplementers>();
             form.ShowDialog();
         }
-        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            work.DoWork();
-            LoadData();
-        }
+
         private void ButtonCreateOrder_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormCreateOrder>();
             form.ShowDialog();
             LoadData();
-        }      
+        }
         private void ButtonPayOrder_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
@@ -131,10 +127,46 @@ namespace DinerView
             var form = Container.Resolve<FormReportSnackFoods>();
             form.ShowDialog();
         }
+        private void продуктыПоСкладамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportStorageFoods>();
+            form.ShowDialog();
+        }
+        private void списокСкладовToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new SaveFileDialog { Filter = "docx|*.docx" })
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    report.SaveStoragesToWordFile(new ReportBindingModel { FileName = dialog.FileName });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void пополнитьСкладыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormFillStorage>();
+            form.ShowDialog();
+        }
+        private void складыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormStorages>();
+            form.ShowDialog();
+        }
+        private void списокПродуктовСоСкладамиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormReportFoods>();
+            form.ShowDialog();
+        }
         private void клиентыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form = Container.Resolve<FormClients>();
             form.ShowDialog();
+        }
+        private void запускРаботToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            work.DoWork();
+            LoadData();
         }
     }
 }

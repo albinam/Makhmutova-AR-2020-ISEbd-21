@@ -60,15 +60,18 @@ namespace DinerFileImplement.Implements
         public List<OrderViewModel> Read(OrderBindingModel model)
         {
             return source.Orders
-            .Where(rec => model == null || rec.Id == model.Id || (model.DateFrom.HasValue && model.DateTo.HasValue && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) 
-            ||( model.ClientId.HasValue && rec.ClientId == model.ClientId)
-            || model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue
-            || model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется)
+            .Where(rec => model == null ||
+                (model.Id != null && rec.Id == model.Id) ||
+                (model.DateFrom != null && model.DateTo != null && rec.DateCreate >= model.DateFrom && rec.DateCreate <= model.DateTo) ||
+                (rec.ClientId == model.ClientId) ||
+                (model.FreeOrders.HasValue && model.FreeOrders.Value && !rec.ImplementerId.HasValue) ||
+                (model.ImplementerId.HasValue && rec.ImplementerId == model.ImplementerId && rec.Status == OrderStatus.Выполняется) ||
+                (model.NotEnoughFoodsOrders.HasValue && model.NotEnoughFoodsOrders.Value && rec.Status == OrderStatus.Требуются_продукты))
             .Select(rec => new OrderViewModel
             {
                 Id = rec.Id,
                 SnackName = GetSnackName(rec.SnackId),
-                ClientId = rec.ClientId,              
+                ClientId = rec.ClientId,
                 ClientFIO = source.Clients.FirstOrDefault(recC => recC.Id == rec.ClientId)?.ClientFIO,
                 ImplementerFIO = source.Implementers.FirstOrDefault(recC => recC.Id == rec.ImplementerId)?.ImplementerFIO,
                 Count = rec.Count,

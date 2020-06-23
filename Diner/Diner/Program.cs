@@ -33,6 +33,8 @@ namespace DinerView
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<IClientLogic, ClientLogic>(new
            HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IStorageLogic, StorageLogic>(new
+          HierarchicalLifetimeManager());
             currentContainer.RegisterType<IImplementerLogic, ImplementerLogic>(new
            HierarchicalLifetimeManager());
             currentContainer.RegisterType<MainLogic>(new HierarchicalLifetimeManager());
