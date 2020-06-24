@@ -63,8 +63,8 @@ namespace DinerDatabaseImplement.Implements
                 return context.Clients
                 .Where(
                     rec => model == null
-                    || rec.Id == model.Id
-                    || rec.Email == model.Email && rec.Password == model.Password
+                    || (rec.Id == model.Id)
+                    || (rec.Email == model.Email && rec.Password == model.Password)
                 )
                 .Select(rec => new ClientViewModel
                 {
